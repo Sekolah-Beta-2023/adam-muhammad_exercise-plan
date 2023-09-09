@@ -2,12 +2,12 @@
     <main>
         <section class="add-plans">
             <div class="plan-header">
-                <img class="plan-img-logo" src="/istockphoto-1248698782-612x612.jpg" alt="exercise">
+                <img class="plan-img-logo" src="../assets/istockphoto-1248698782-612x612.jpg" alt="exercise">
                 <input class="plan-name" type="text" placeholder="Exercise Name">
             </div>
             <div class="input-container">
-                <input class="search-bar-exercise" type="search" name="" id="">
-                <select @change="updatedList()" class="sort-exercise" name="target" id="category" v-model="selectedTarget">
+                <input class="search-bar-exercise" type="search" name="search" id="search">
+                <select @change="updatedList()" class="sort-exercise" name="target" id="target" v-model="selectedTarget">
                     <option value="All">select target</option>
                     <option value="abs">abs</option>
                     <option value="quads">quads</option>
@@ -36,16 +36,18 @@ export default {
         return{
             exerciseData: exerciseData,
             sortedExercise: exerciseData,
-            selectedTarget: "All"
+            selectedTarget: "All",
         }
+    },
+    mounted() {
+        this.sortedExercise = this.exerciseData
     },
     methods: {
         updatedList() {
-            this.sortedExercise = []
-            if(selectedTarget === "All") {
-                this.sortedExercise = exerciseData
+            if(this.selectedTarget === "All") {
+                this.sortedExercise = this.exerciseData
             } else {
-                this.sortedExercise = exerciseData.filter((item) => item.target === this.selectedTarget)
+                this.sortedExercise = this.exerciseData.filter((item) => item.target === this.selectedTarget)
             }
         }
     }
