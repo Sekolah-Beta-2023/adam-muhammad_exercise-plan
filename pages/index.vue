@@ -1,34 +1,218 @@
 <template>
     <main>
-        <section class="section-1-container">
-            <h1 class="app-description">Workout Calendar will keep track of your training sessions</h1>
-            <img class="app-description-img" src="../assets/fitness-png-82.png" alt="a man exercise">    
+        <section class="add-plans">
+            <div class="plan-header">
+                <img class="plan-img-logo" src="/istockphoto-1248698782-612x612.jpg" alt="exercise">
+                <input class="plan-name" type="text" placeholder="Exercise Name">
+            </div>
+            <div class="input-container">
+                <input class="search-bar-exercise" type="search" name="" id="">
+                <select @change="updatedList()" class="sort-exercise" name="target" id="category" v-model="selectedTarget">
+                    <option value="All">select target</option>
+                    <option value="abs">abs</option>
+                    <option value="quads">quads</option>
+                    <option value="lats">lats</option>
+                    <option value="calves">calves</option>
+                    <option value="pectorals">pectorals</option>
+                    <option value="glutes">glutes</option>
+                </select>
+            </div>
+            <div class="list-container">
+                <ListItem v-for="exercise in sortedExercise" :exercise="exercise" :key="exercise.id"/>                
+            </div>
         </section>
     </main>
 </template>
 
 <script>
-  export default {
+import ListItem from "@/components/List/ListItem.vue"
+import exerciseData from "@/assets/exercise.json"
 
-  }
+export default {
+    components: {
+        ListItem
+    },
+    data() {
+        return{
+            exerciseData: exerciseData,
+            sortedExercise: exerciseData,
+            selectedTarget: "All"
+        }
+    },
+    methods: {
+        updatedList() {
+            this.sortedExercise = []
+            if(selectedTarget === "All") {
+                this.sortedExercise = exerciseData
+            } else {
+                this.sortedExercise = exerciseData.filter((item) => item.target === this.selectedTarget)
+            }
+        }
+    }
+
+}
 </script>
 
 <style>
-.section-1-container {
-    padding: 80px 50px;
-    background-color: #ac92a6;
+main {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 150px;
+}
+
+.container-lists {
+    background-color: #eef2f6;
+    width: 80%; 
+    display: flex;
+    flex-direction: column;
+    padding: 20px 30px;
+}
+
+.workout-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: red;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.title-list {
+    background-color: #E9FAE3;
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.title-list h2 {
+    background-color: #703D57;
+    margin: 20px 30px;
+}
+
+.dropdown-btn {
+    background-color:inherit;
+    margin: 20px 50px;
+    border: none;
+}
+
+.dropdown-img {
+    width: 20px;
+}
+
+.action-list {
+    background-color: cornsilk;
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.btn {
+    background-color: inherit;
+    width: 50%;
+    font-size: large;
+}
+
+
+.add-btn {
+    position: fixed;
+    bottom: 100px;
+    right: 20px;
+    width: 40px;
+    aspect-ratio: 1;
+    border: none;
+    border-radius: 50%;
+}
+
+.add-btn img {
+    width: 20px;
+}
+
+/* add plans */
+
+.add-plans {
+    width: 90%;
+    margin-top: 50px;
+    background: rgba( 220, 220, 220, 0.2 );
+    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.1 );
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items:stretch;
+
+}
+
+.plan-header {
+    background-color: #d3dbe5;
+    padding: 20px 30px;
+    display: flex;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.plan-img-logo {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+.plan-name {
+    background-color: inherit;
+    width: 80%;
+    border: none;
+    border-bottom: 2px solid black;
+    align-self: flex-end;
+    height: 40px;
+    margin-left: 20px;
+    padding: 0 10px;
+    font-size: large;
+}
+
+.plan-name:focus {
+    border: none;
+    border-bottom: 2px solid black;
+}
+
+/*  */
+
+.list-container {
+    border: 2px solid black;
+    width: 80%;
+    align-self: center;
+    height: 300px;
+    display: flex;
+    justify-content:flex-start;
+    overflow: auto;
+    margin-bottom: 20px;
+}
+
+.input-container {
+
     display: flex;
     justify-content: space-around;
-    align-items: center;
+    padding: 30px;
 }
 
-.app-description {
-    width: 250px;
-    font-size: 40px;
-    align-self:first baseline;
+.search-bar-exercise {
+    width: 70%;
+    height: 40px;
+    background-color: inherit;
+    border: 2px solid black;
+    border-radius: 20px;
+    padding: 5px 20px;
 }
 
-.app-description-img {
-    width: 400px;
+.sort-exercise {
+    background-color: inherit;
+    border: 2px solid black;
+    border-radius: 20px;
+    padding: 5px 20px;
 }
+
+
 </style>
