@@ -44,13 +44,6 @@ export default {
     font-size: 13px;
 }
 
-.list-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
 .exercise-container {
     background-color: whitesmoke;
     width: 90%;
