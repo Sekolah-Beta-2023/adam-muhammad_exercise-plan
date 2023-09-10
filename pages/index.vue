@@ -185,10 +185,9 @@ main {
 .list-container {
     border: 2px solid black;
     width: 80%;
-    align-self: center;
     height: 300px;
     display: flex;
-    justify-content:flex-start;
+    justify-content: flex-start;
     overflow: auto;
     margin-bottom: 20px;
 }
