@@ -62,78 +62,6 @@ main {
     margin-bottom: 150px;
 }
 
-.container-lists {
-    background-color: #eef2f6;
-    width: 80%; 
-    display: flex;
-    flex-direction: column;
-    padding: 20px 30px;
-}
-
-.workout-list {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: red;
-    width: 100%;
-    margin-bottom: 10px;
-}
-
-.title-list {
-    background-color: #E9FAE3;
-    display: flex;
-    justify-content:space-between;
-    align-items: center;
-    width: 100%;
-}
-
-.title-list h2 {
-    background-color: #703D57;
-    margin: 20px 30px;
-}
-
-.dropdown-btn {
-    background-color:inherit;
-    margin: 20px 50px;
-    border: none;
-}
-
-.dropdown-img {
-    width: 20px;
-}
-
-.action-list {
-    background-color: cornsilk;
-    display: flex;
-    justify-content:space-between;
-    align-items: center;
-    width: 100%;
-}
-
-.btn {
-    background-color: inherit;
-    width: 50%;
-    font-size: large;
-}
-
-
-.add-btn {
-    position: fixed;
-    bottom: 100px;
-    right: 20px;
-    width: 40px;
-    aspect-ratio: 1;
-    border: none;
-    border-radius: 50%;
-}
-
-.add-btn img {
-    width: 20px;
-}
-
-/* add plans */
-
 .add-plans {
     width: 90%;
     margin-top: 50px;
@@ -184,9 +112,11 @@ main {
 
 .list-container {
     border: 2px solid black;
+    align-self: center;
     width: 80%;
     height: 300px;
     display: flex;
+    flex-direction: column;
     justify-content: flex-start;
     overflow: auto;
     margin-bottom: 20px;
