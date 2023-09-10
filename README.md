@@ -1,6 +1,6 @@
 # nuxt-app
 
-## Build Setup [deploy](https://daily-exercise-plan.netlify.app/)
+## Build Setup [https://daily-exercise-plan.netlify.app/](https://daily-exercise-plan.netlify.app/)
 
 ```bash
 # install dependencies
