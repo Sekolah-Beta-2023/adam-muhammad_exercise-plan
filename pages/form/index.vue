@@ -1,8 +1,14 @@
 <template>
     <div class="form-container">
+        <header class="exercise-header">
+            <nuxt-link class="back-btn" to="/">
+                <img class="back-img" src="~/assets/pngwing.com (1).png" alt="back">
+            </nuxt-link>
+            <h2 class="exercise-title">Build Plan</h2>
+        </header>
         <section class="add-plans">
             <div class="plan-header">
-                <img class="plan-img-logo" src="" alt="exercise">
+                <img class="plan-img-logo" src="~/assets/istockphoto-1248698782-612x612.jpg" alt="exercise">
                 <input class="plan-name" type="text" placeholder="Exercise Name">
             </div>
             <div class="input-container">
@@ -20,6 +26,7 @@
             <div class="list-container">
                 <ListItem v-for="exercise in sortedExercise" :exercise="exercise" :key="exercise.id"/>                
             </div>
+            <button class="save-btn">Save</button>
         </section>
     </div>
 </template>
@@ -56,6 +63,58 @@ export default {
 </script>
 
 <style>
+.exercise-container {
+    background-color: #202124;
+    width: 100%;
+    height: 100vh;
+    padding-bottom: 150px;
+}
+
+.exercise-header {
+    border: 1px solid #aaa;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: fit-content;
+    color: white;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.exercise-header button {
+    background-color: inherit;
+    color: white;
+}
+
+.back-btn {
+    display: block;
+    background-color: #202124;
+    border: none;
+    border-right: 1px solid #aaa;
+    width: 50px;
+    aspect-ratio: 1;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+}
+
+.back-img {
+    width: 50px;
+    -webkit-filter: grayscale(1) invert(1);
+    filter: grayscale(1) invert(1);
+}
+
+.exercise-title {
+    color: white;
+    margin-left: 30px;
+}
+
+/*  */
+
 .form-container {
     height: 100vh;
     display: flex;
@@ -63,13 +122,11 @@ export default {
     align-items: center;
     background-color: #202124;
     padding-bottom: 150px;
-    padding-top: 50px;
 }
 
 .add-plans {
     width: 90%;
-    height: 100%;
-    margin-top: 100px;
+    margin-top: 90px;
     border-radius: 4px;
     border: 1px solid #aaa;
     display: flex;
@@ -111,8 +168,15 @@ export default {
 }
 
 /* search, sort */
+.input-container {
+    display: flex;
+    justify-content: space-around;
+    padding: 30px 10px;
+}
+
+
 .search-bar-exercise {
-    width: 70%;
+    width: 80%;
     height: 40px;
     background-color: inherit;
     border: 1px solid #aaa;
@@ -135,20 +199,29 @@ export default {
     border: 1px solid #aaa;
     border-radius: 4px;
     align-self: center;
-    width: 80%;
-    height: 300px;
+    margin: 0 10px 10px 10px;
+    height: 400px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     overflow: auto;
-    margin-bottom: 20px;
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
 }
 
-.input-container {
+.list-container::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}
 
-    display: flex;
-    justify-content: space-around;
-    padding: 30px;
+.save-btn {
+    color: white;
+    background-color: inherit;
+    border: 1px solid #aaa;
+    padding: 10px 20px;
+    border-radius: 4px;
+    margin: 0 10px 10px 0;
+    aspect-ratio: 3/2;
+    align-self: flex-end;
 }
 
 

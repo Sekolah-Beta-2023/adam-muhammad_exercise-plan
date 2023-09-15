@@ -129,6 +129,8 @@
     margin-left: 30px;
 }
 
+/*  */
+
 .exercise-list-container {
     margin-top: 100px;
     border: 1px solid #aaa;
