@@ -1,7 +1,7 @@
 <template>
     <nav class="navbar">
         <div class="navbar-container">
-            <nuxt-link class="nav-link" to="/plan">Plans</nuxt-link>
+            <nuxt-link class="nav-link" to="/">Plans</nuxt-link>
             <nuxt-link class="nav-link" to="/calendar">Calendar</nuxt-link>
             <nuxt-link class="nav-link" to="/profile">Profile</nuxt-link>
         </div>

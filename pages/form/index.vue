@@ -57,6 +57,7 @@ export default {
 
 <style>
 .form-container {
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -67,11 +68,13 @@ export default {
 
 .add-plans {
     width: 90%;
+    height: 100%;
+    margin-top: 100px;
     border-radius: 4px;
     border: 1px solid #aaa;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items:stretch;
 
 }

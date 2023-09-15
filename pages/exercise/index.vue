@@ -1,15 +1,81 @@
 <template>
     <div class="exercise-container">
         <header class="exercise-header">
-            <nuxt-link class="back-btn" to="/plan">
+            <nuxt-link class="back-btn" to="/">
                 <img class="back-img" src="~/assets/pngwing.com (1).png" alt="back">
             </nuxt-link>
             <h2 class="exercise-title">Full Body</h2>
         </header>
         <div class="exercise-list-container">
-            <div>
-                <img src="" alt="">
-                
+            <div class="exercise-list">
+                <img class="exercise-img" src="https://api.exercisedb.io/image/HxTsw2h80JVLdI" alt="">
+                <div class="exercise-desc">
+                    <h2>Body Rolling</h2>
+                    <p>makan</p>
+                </div>
+            </div>
+            <div class="exercise-list">
+                <img class="exercise-img" src="https://api.exercisedb.io/image/HxTsw2h80JVLdI" alt="">
+                <div class="exercise-desc">
+                    <h2>Body Rolling</h2>
+                    <p>makan</p>
+                </div>
+            </div>
+            <div class="exercise-list">
+                <img class="exercise-img" src="https://api.exercisedb.io/image/HxTsw2h80JVLdI" alt="">
+                <div class="exercise-desc">
+                    <h2>Body Rolling</h2>
+                    <p>makan</p>
+                </div>
+            </div>
+            <div class="exercise-list">
+                <img class="exercise-img" src="https://api.exercisedb.io/image/HxTsw2h80JVLdI" alt="">
+                <div class="exercise-desc">
+                    <h2>Body Rolling</h2>
+                    <p>makan</p>
+                </div>
+            </div>
+            <div class="exercise-list">
+                <img class="exercise-img" src="https://api.exercisedb.io/image/HxTsw2h80JVLdI" alt="">
+                <div class="exercise-desc">
+                    <h2>Body Rolling</h2>
+                    <p>makan</p>
+                </div>
+            </div>
+            <div class="exercise-list">
+                <img class="exercise-img" src="https://api.exercisedb.io/image/HxTsw2h80JVLdI" alt="">
+                <div class="exercise-desc">
+                    <h2>Body Rolling</h2>
+                    <p>makan</p>
+                </div>
+            </div>
+            <div class="exercise-list">
+                <img class="exercise-img" src="https://api.exercisedb.io/image/HxTsw2h80JVLdI" alt="">
+                <div class="exercise-desc">
+                    <h2>Body Rolling</h2>
+                    <p>makan</p>
+                </div>
+            </div>
+            <div class="exercise-list">
+                <img class="exercise-img" src="https://api.exercisedb.io/image/HxTsw2h80JVLdI" alt="">
+                <div class="exercise-desc">
+                    <h2>Body Rolling</h2>
+                    <p>makan</p>
+                </div>
+            </div>
+            <div class="exercise-list">
+                <img class="exercise-img" src="https://api.exercisedb.io/image/HxTsw2h80JVLdI" alt="">
+                <div class="exercise-desc">
+                    <h2>Body Rolling</h2>
+                    <p>makan</p>
+                </div>
+            </div>
+            <div class="exercise-list">
+                <img class="exercise-img" src="https://api.exercisedb.io/image/HxTsw2h80JVLdI" alt="">
+                <div class="exercise-desc">
+                    <h2>Body Rolling</h2>
+                    <p>makan</p>
+                </div>
             </div>
         </div>
     </div>
@@ -22,6 +88,7 @@
     background-color: #202124;
     width: 100%;
     height: 100vh;
+    padding-bottom: 150px;
 }
 
 .exercise-header {
@@ -61,5 +128,36 @@
     color: white;
     margin-left: 30px;
 }
+
+.exercise-list-container {
+    margin-top: 100px;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    color: white;
+    width: 100%;
+    overflow: auto;
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.exercise-list::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}
+
+.exercise-list {
+    border-bottom: 1px solid #aaa;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.exercise-desc {
+    margin-left: 10px;
+}
+
+
+
+
 
 </style>
