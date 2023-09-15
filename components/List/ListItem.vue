@@ -24,6 +24,7 @@ export default {
     display: flex;
     align-items: center;
     width: 100%;
+    border-bottom: 1px solid #aaa;
 }
 
 .exercise-img {
@@ -33,7 +34,8 @@ export default {
 }
 
 .title-desc-container {
-    margin-left: 10px;
+    margin-left: 20px;
+    color: white;
 }
 
 .title-exercise {
