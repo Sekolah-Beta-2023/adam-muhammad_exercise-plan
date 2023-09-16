@@ -4,28 +4,35 @@
             <nuxt-link class="back-btn" to="/">&#8249;</nuxt-link>
             <h2 class="exercise-title">Build Plan</h2>
         </header>
-        <section class="add-plans">
-            <div class="plan-header">
-                <img class="plan-img-logo" src="~/assets/istockphoto-1248698782-612x612.jpg" alt="exercise">
-                <input class="plan-name" type="text" placeholder="Exercise Name">
-            </div>
-            <div class="input-container">
-                <input class="search-bar-exercise" type="search" name="search" id="search">
-                <select @change="updatedList()" class="sort-exercise" name="target" id="target" v-model="selectedTarget">
-                    <option value="All">select target</option>
-                    <option value="abs">abs</option>
-                    <option value="quads">quads</option>
-                    <option value="lats">lats</option>
-                    <option value="calves">calves</option>
-                    <option value="pectorals">pectorals</option>
-                    <option value="glutes">glutes</option>
-                </select>
-            </div>
-            <div class="list-container">
-                <ListItem v-for="exercise in sortedExercise" :exercise="exercise" :key="exercise.id"/>                
-            </div>
-            <button class="save-btn">Save</button>
-        </section>
+        <form class="add-plans" v-on:submit.prevent="handleSubmit">
+                <div class="plan-header">
+                    <img class="plan-img-logo" src="~/assets/istockphoto-1248698782-612x612.jpg" alt="exercise">
+                    <input v-model="form.plan_name" class="plan-name" type="text" placeholder="Exercise Name">
+                </div>
+                <div class="input-container">
+                    <input class="search-bar-exercise" type="search" name="search" id="search">
+                    <select @change="updatedList()" class="sort-exercise" name="target" id="target" v-model="selectedTarget">
+                        <option value="All">select target</option>
+                        <option value="abs">abs</option>
+                        <option value="quads">quads</option>
+                        <option value="lats">lats</option>
+                        <option value="calves">calves</option>
+                        <option value="pectorals">pectorals</option>
+                        <option value="glutes">glutes</option>
+                    </select>
+                </div>
+                <div class="list-container">
+                    <label v-for="exercise in sortedExercise" class="exercise-label" :for="exercise.name" :key="exercise.id">
+                        <input class="exercise-check" type="checkbox" :name="exercise.name" :value="exercise.id" :id="exercise.name" v-model="form.exercises">
+                        <img class="exercise-img" :src="exercise.gifUrl" alt="training">
+                        <div class="title-desc-container">
+                            <h3 class="title-exercise">{{ exercise.name }}</h3>
+                            <p class="desc-exercise">{{ exercise.target }}</p>
+                        </div>
+                    </label>
+                </div>
+                <button class="save-btn">Save</button>
+        </form>
     </div>
 </template>
 
@@ -58,6 +65,9 @@ export default {
             } else {
                 this.sortedExercise = this.exerciseData.filter((item) => item.target === this.selectedTarget)
             }
+        },
+        handleSubmit() {
+            console.log(this.form)
         }
     }
 
@@ -156,6 +166,7 @@ export default {
     margin-left: 20px;
     padding: 0 10px;
     font-size: large;
+    color: white;
 }
 
 .plan-name:focus {
