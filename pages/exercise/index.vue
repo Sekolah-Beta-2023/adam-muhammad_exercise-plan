@@ -1,9 +1,7 @@
 <template>
     <div class="exercise-container">
         <header class="exercise-header">
-            <nuxt-link class="back-btn" to="/">
-                <img class="back-img" src="~/assets/pngwing.com (1).png" alt="back">
-            </nuxt-link>
+            <nuxt-link class="back-btn" to="/">&#8249;</nuxt-link>
             <h2 class="exercise-title">Full Body</h2>
         </header>
         <div class="exercise-list-container">
@@ -105,7 +103,7 @@
 }
 
 .back-btn {
-    display: block;
+    font-size: 30px;
     background-color: #202124;
     border: none;
     border-right: 1px solid #aaa;

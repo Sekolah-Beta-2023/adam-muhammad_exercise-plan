@@ -1,9 +1,7 @@
 <template>
     <div class="form-container">
         <header class="exercise-header">
-            <nuxt-link class="back-btn" to="/">
-                <img class="back-img" src="~/assets/pngwing.com (1).png" alt="back">
-            </nuxt-link>
+            <nuxt-link class="back-btn" to="/">&#8249;</nuxt-link>
             <h2 class="exercise-title">Build Plan</h2>
         </header>
         <section class="add-plans">
@@ -44,6 +42,10 @@ export default {
             exerciseData: exerciseData,
             sortedExercise: exerciseData,
             selectedTarget: "All",
+            form: {
+                plan_name: '',
+                exercises: []
+            }
         }
     },
     mounted() {

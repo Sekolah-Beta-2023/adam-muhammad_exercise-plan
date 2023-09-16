@@ -4,6 +4,9 @@
             <h1 class="plan-list-title">Your Plan</h1>
             <div class="plan-list">
                 <div class="exercise-plan" >
+                    <nuxt-link class="add-plan" to="/form">+</nuxt-link>
+                </div>
+                <div class="exercise-plan" >
                     <nuxt-link class="exercise-plan-link" to="/exercise">Strong Lifts 5x5</nuxt-link>
                 </div>
                 <div class="exercise-plan" >
@@ -28,7 +31,6 @@
                 </div>
             </div>
         </section>
-        <nuxt-link class="add-plan" to="/form">+</nuxt-link>
     </div>
 </template>
 
@@ -45,7 +47,6 @@
     background-color: #202124;
     color: white;
     height: 100vh;
-    padding: 50px 30px;
 }
 
 .plan-list-container {
@@ -54,7 +55,6 @@
     justify-content: flex-start;
     padding: 20px 40px;
     margin-bottom: 50px;
-    border: 1px solid #aaa;
     width: 100%;
 }
 
@@ -94,14 +94,9 @@
 }
 
 .add-plan {
-    border: 1px solid #aaa;
-    width: 50px;
-    aspect-ratio: 1;
     border-radius: 10px;
     color: white;
-    position: absolute;
-    bottom: 150px;
-    right: 50px;
+    font-size: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
