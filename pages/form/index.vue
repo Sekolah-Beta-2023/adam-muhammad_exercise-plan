@@ -63,14 +63,9 @@ export default {
 </script>
 
 <style>
-.exercise-container {
-    background-color: #202124;
-    width: 100%;
-    height: 100vh;
-    padding-bottom: 150px;
-}
 
 .exercise-header {
+    background-color: #202124;
     border: 1px solid #aaa;
     position: fixed;
     top: 0;
@@ -116,17 +111,16 @@ export default {
 /*  */
 
 .form-container {
-    height: 100vh;
+    min-height: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     background-color: #202124;
-    padding-bottom: 150px;
+    padding: 80px 0 150px 0;
 }
 
 .add-plans {
     width: 90%;
-    margin-top: 90px;
     border-radius: 4px;
     border: 1px solid #aaa;
     display: flex;
@@ -198,9 +192,9 @@ export default {
 .list-container {
     border: 1px solid #aaa;
     border-radius: 4px;
-    align-self: center;
+    align-self: stretch;
     margin: 0 10px 10px 10px;
-    height: 400px;
+    max-height: 400px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
