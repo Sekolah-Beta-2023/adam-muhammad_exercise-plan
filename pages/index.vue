@@ -6,11 +6,8 @@
                 <div class="exercise-plan" >
                     <nuxt-link class="add-plan" to="/form">+</nuxt-link>
                 </div>
-                <div class="exercise-plan" >
-                    <nuxt-link class="exercise-plan-link" to="/exercise">Strong Lifts 5x5</nuxt-link>
-                </div>
-                <div class="exercise-plan" >
-                    <a class="exercise-plan-link" href="#">Strong Lifts 5x5</a>
+                <div v-for="plan in plans" class="exercise-plan" >
+                    <nuxt-link class="exercise-plan-link" :to="plan.plan_name">{{ plan.plan_name }}</nuxt-link>
                 </div>
             </div>
         </section>
@@ -35,7 +32,24 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex"
 
+export default {
+    // data() {
+    //     return {
+    //         plans: this.$route.plans.getters.get_plans
+    //     }
+    // }
+    computed: {
+        ...mapGetters({
+            getPlans: 'plans/getPlans'
+        }),
+
+        plans() {
+            return this.getPlans
+        }
+    }
+}
 </script>
 
 <style>

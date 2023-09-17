@@ -23,7 +23,7 @@
                 </div>
                 <div class="list-container">
                     <label v-for="exercise in sortedExercise" class="exercise-label" :for="exercise.name" :key="exercise.id">
-                        <input class="exercise-check" type="checkbox" :name="exercise.name" :value="exercise.id" :id="exercise.name" v-model="form.exercises">
+                        <input class="exercise-check" type="checkbox" :name="exercise.name" :value="exercise" :id="exercise.name" v-model="form.exercises">
                         <img class="exercise-img" :src="exercise.gifUrl" alt="training">
                         <div class="title-desc-container">
                             <h3 class="title-exercise">{{ exercise.name }}</h3>
@@ -58,6 +58,12 @@ export default {
     mounted() {
         this.sortedExercise = this.exerciseData
     },
+    // computed: {
+    //     handleSubmit() {
+    //         console.log(this.form)
+    //         this.$store.commit('ADD_PLAN', this.form);
+    //     }
+    // }    ,
     methods: {
         updatedList() {
             if(this.selectedTarget === "All") {
@@ -66,8 +72,9 @@ export default {
                 this.sortedExercise = this.exerciseData.filter((item) => item.target === this.selectedTarget)
             }
         },
-        handleSubmit() {
+        handleSubmit() { 
             console.log(this.form)
+            this.$store.dispatch('plans/addPlan', this.form);
         }
     }
 
@@ -229,6 +236,7 @@ export default {
     margin: 0 10px 10px 0;
     aspect-ratio: 3/2;
     align-self: flex-end;
+    cursor: pointer;
 }
 
 
