@@ -19,7 +19,7 @@ export const getters = {
     return state.plans
     },
     getPlanByName: (state) => (name) => {
-        return state.plans.find(plan => plan.plan_name === name)
+        return state.plans.find(plan => plan.plan_name == name)
     }
 }
 

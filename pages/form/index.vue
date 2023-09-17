@@ -58,12 +58,6 @@ export default {
     mounted() {
         this.sortedExercise = this.exerciseData
     },
-    // computed: {
-    //     handleSubmit() {
-    //         console.log(this.form)
-    //         this.$store.commit('ADD_PLAN', this.form);
-    //     }
-    // }    ,
     methods: {
         updatedList() {
             if(this.selectedTarget === "All") {
@@ -75,6 +69,7 @@ export default {
         handleSubmit() { 
             console.log(this.form)
             this.$store.dispatch('plans/addPlan', this.form);
+            this.$router.go(-1)
         }
     }
 

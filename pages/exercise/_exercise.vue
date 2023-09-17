@@ -6,18 +6,16 @@
         </header>
         <div class="exercise-list-container">
             <div v-for="exercise in plan.exercises" class="exercise-list">
-                <img class="exercise-img" :src="exercise.gifUrl" alt="">
+                <img class="exercise-img" :src="exercise.gifUrl" :alt="exercise.name">
                 <div class="exercise-desc">
-                    <h2>exercise.name</h2>
-                    <p>exercise.target</p>
+                    <h2>{{exercise.name}}</h2>
+                    <p>{{exercise.target}}</p>
                 </div>
             </div>
         </div>
-        <div>{{ plan }}</div>
     </div>
 </template>
 <script>
-</script>
 import { mapGetters } from "vuex"
 
 export default {
@@ -26,10 +24,11 @@ export default {
             getPlanByName: 'plans/getPlanByName'
         }),
         plan() {
-            return this.getPlanByName($route.params.exercise)
+            return this.getPlanByName(this.$route.params.exercise)
         }
     }
 }
+</script>
 <style>
 .exercise-container {
     background-color: #202124;

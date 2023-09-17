@@ -7,12 +7,12 @@
                     <nuxt-link class="add-plan" to="/form">+</nuxt-link>
                 </div>
                 <div v-for="plan in plans" class="exercise-plan" >
-                    <nuxt-link class="exercise-plan-link" :to="plan.plan_name">{{ plan.plan_name }}</nuxt-link>
+                    <nuxt-link class="exercise-plan-link" :to="`/exercise/${plan.plan_name}`">{{ plan.plan_name }}</nuxt-link>
                 </div>
             </div>
         </section>
         <section class="plan-list-container">
-            <h1 class="plan-list-title">Your Plan</h1>
+            <h1 class="plan-list-title">Recommendations</h1>
             <div class="plan-list">
                 <div class="exercise-plan" >
                     <a class="exercise-plan-link" href="#">Strong Lifts 5x5</a>
