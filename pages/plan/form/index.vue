@@ -1,7 +1,7 @@
 <template>
     <div class="form-container">
         <header class="exercise-header">
-            <nuxt-link class="back-btn" to="/">&#8249;</nuxt-link>
+            <nuxt-link class="back-btn" to="/plan">&#8249;</nuxt-link>
             <h2 class="exercise-title">Build Plan</h2>
         </header>
         <form class="add-plans" v-on:submit.prevent="handleSubmit">
@@ -24,7 +24,7 @@
                 <div class="list-container">
                     <label v-for="exercise in sortedExercise" class="exercise-label" :for="exercise.name" :key="exercise.id">
                         <input class="exercise-check" type="checkbox" :name="exercise.name" :value="exercise" :id="exercise.name" v-model="form.exercises">
-                        <img class="exercise-img" :src="exercise.gifUrl" alt="training">
+                        <img class="exercise-img" :src="exercise.gifUrl" :alt="exercise.name">
                         <div class="title-desc-container">
                             <h3 class="title-exercise">{{ exercise.name }}</h3>
                             <p class="desc-exercise">{{ exercise.target }}</p>
@@ -41,6 +41,7 @@ import ListItem from "@/components/List/ListItem.vue"
 import exerciseData from "@/assets/exercise.json"
 
 export default {
+    layout: 'dashboard',
     components: {
         ListItem
     },

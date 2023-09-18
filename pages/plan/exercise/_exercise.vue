@@ -1,7 +1,7 @@
 <template>
     <div class="exercise-container">
         <header class="exercise-header">
-            <nuxt-link class="back-btn" to="/">&#8249;</nuxt-link>
+            <nuxt-link class="back-btn" to="/plan">&#8249;</nuxt-link>
             <h2 class="exercise-title">{{ plan.plan_name }}</h2>
         </header>
         <div class="exercise-list-container">
@@ -19,6 +19,7 @@
 import { mapGetters } from "vuex"
 
 export default {
+    layout: 'dashboard',
     computed: {
         ...mapGetters({
             getPlanByName: 'plans/getPlanByName'
