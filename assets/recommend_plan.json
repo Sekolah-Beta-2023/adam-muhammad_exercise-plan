@@ -1,0 +1,290 @@
+[
+    {
+        "plan_name": "StrongLifts 5x5",
+        "workout_list": [
+            {
+                "workout_name": "Workout A",
+                "exercises": [
+                    {
+                        "bodyPart": "upper legs",
+                        "equipment": "barbell",
+                        "gifUrl": "https://api.exercisedb.io/image/IutAUVr1Uvxy5I",
+                        "id": "0102",
+                        "name": "barbell squat (on knees)",
+                        "target": "quads"
+                    },
+                    {
+                        "bodyPart": "chest",
+                        "equipment": "barbell",
+                        "gifUrl": "https://api.exercisedb.io/image/vwifMfVAKdU7yr",
+                        "id": "0025",
+                        "name": "barbell bench press",
+                        "target": "pectorals"
+                    },
+                    {
+                        "bodyPart": "back",
+                        "equipment": "barbell",
+                        "gifUrl": "https://api.exercisedb.io/image/dWysd8q9aj5xo0",
+                        "id": "0027",
+                        "name": "barbell bent over row",
+                        "target": "upper back"
+                    }
+                ]
+            },
+            {
+                "workout_name": "Workout B",
+                "exercises": [
+                    {
+                        "bodyPart": "upper legs",
+                        "equipment": "barbell",
+                        "gifUrl": "https://api.exercisedb.io/image/IutAUVr1Uvxy5I",
+                        "id": "0102",
+                        "name": "barbell squat (on knees)",
+                        "target": "quads"
+                    },
+                    {
+                        "bodyPart": "shoulders",
+                        "equipment": "barbell",
+                        "gifUrl": "https://api.exercisedb.io/image/ahiBqkv-gjvtS8",
+                        "id": "1457",
+                        "name": "barbell standing wide military press",
+                        "target": "delts"
+                    },
+                    {
+                        "bodyPart": "upper legs",
+                        "equipment": "barbell",
+                        "gifUrl": "https://api.exercisedb.io/image/-Fl3uIr05WmqPr",
+                        "id": "0032",
+                        "name": "barbell deadlift",
+                        "target": "glutes"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "plan_name": "Power Hypertrophy Upper Lower",
+        "workout_list": [
+            {
+                "workout_name": "Upper Power",
+                "exercises": [
+                    {
+                        "bodyPart": "chest",
+                        "equipment": "barbell",
+                        "gifUrl": "https://api.exercisedb.io/image/vwifMfVAKdU7yr",
+                        "id": "0025",
+                        "name": "barbell bench press",
+                        "target": "pectorals"
+                    },
+                    {
+                        "bodyPart": "chest",
+                        "equipment": "dumbbell",
+                        "gifUrl": "https://api.exercisedb.io/image/df88NbXwP1zBW3",
+                        "id": "0314",
+                        "name": "dumbbell incline bench press",
+                        "target": "pectorals"
+                    },
+                    {
+                        "bodyPart": "back",
+                        "equipment": "barbell",
+                        "gifUrl": "https://api.exercisedb.io/image/dWysd8q9aj5xo0",
+                        "id": "0027",
+                        "name": "barbell bent over row",
+                        "target": "upper back"
+                    },
+                    {
+                        "bodyPart": "back",
+                        "equipment": "cable",
+                        "gifUrl": "https://api.exercisedb.io/image/6xtYd83YsJnnZ7",
+                        "id": "2330",
+                        "name": "cable lat pulldown full range of motion",
+                        "target": "lats"
+                    },
+                    {
+                        "bodyPart": "shoulders",
+                        "equipment": "barbell",
+                        "gifUrl": "https://api.exercisedb.io/image/ahiBqkv-gjvtS8",
+                        "id": "1457",
+                        "name": "barbell standing wide military press",
+                        "target": "delts"
+                    },
+                    {
+                        "bodyPart": "upper arms",
+                        "equipment": "barbell",
+                        "gifUrl": "https://api.exercisedb.io/image/IW-PlgTebd2rA5",
+                        "id": "2407",
+                        "name": "barbell biceps curl (with arm blaster)",
+                        "target": "biceps"
+                    },
+                    {
+                        "bodyPart": "upper arms",
+                        "equipment": "barbell",
+                        "gifUrl": "https://api.exercisedb.io/image/N8OuaJ-iPgE7WM",
+                        "id": "0061",
+                        "name": "barbell lying triceps extension",
+                        "target": "triceps"
+                    }
+                ]
+            },
+            {
+                "workout_name": "Lower Power",
+                "exercises": [
+                    {
+                        "bodyPart": "upper legs",
+                        "equipment": "barbell",
+                        "gifUrl": "https://api.exercisedb.io/image/IutAUVr1Uvxy5I",
+                        "id": "0102",
+                        "name": "barbell squat (on knees)",
+                        "target": "quads"
+                    },
+                    {
+                        "bodyPart": "upper legs",
+                        "equipment": "barbell",
+                        "gifUrl": "https://api.exercisedb.io/image/-Fl3uIr05WmqPr",
+                        "id": "0032",
+                        "name": "barbell deadlift",
+                        "target": "glutes"
+                    },
+                    {
+                        "bodyPart": "upper legs",
+                        "equipment": "leverage machine",
+                        "gifUrl": "https://api.exercisedb.io/image/QL4JEgyStcpCBk",
+                        "id": "2287",
+                        "name": "lever alternate leg press ",
+                        "target": "quads"
+                    },
+                    {
+                        "bodyPart": "upper legs",
+                        "equipment": "leverage machine",
+                        "gifUrl": "https://api.exercisedb.io/image/IfYdRLJqnCc2Hh",
+                        "id": "0599",
+                        "name": "lever seated leg curl",
+                        "target": "hamstrings"
+                    },
+                    {
+                        "bodyPart": "lower legs",
+                        "equipment": "leverage machine",
+                        "gifUrl": "https://api.exercisedb.io/image/7YOB3m5RO4ImqS",
+                        "id": "0594",
+                        "name": "lever seated calf raise ",
+                        "target": "calves"
+                    }
+                ]
+            },
+            {
+                "workout_name": "Upper Hypertrophy",
+                "exercises": [
+                    {
+                        "bodyPart": "chest",
+                        "equipment": "barbell",
+                        "gifUrl": "https://api.exercisedb.io/image/XP9FXLte1r0X8A",
+                        "id": "0047",
+                        "name": "barbell incline bench press",
+                        "target": "pectorals"
+                    },
+                    {
+                        "bodyPart": "chest",
+                        "equipment": "dumbbell",
+                        "gifUrl": "https://api.exercisedb.io/image/E3CGVOSYUZ5-r-",
+                        "id": "0308",
+                        "name": "dumbbell fly",
+                        "target": "pectorals"
+                    },
+                    {
+                        "bodyPart": "back",
+                        "equipment": "cable",
+                        "gifUrl": "https://api.exercisedb.io/image/Ou53n-MNcMdvB3",
+                        "id": "0861",
+                        "name": "cable seated row",
+                        "target": "upper back"
+                    },
+                    {
+                        "bodyPart": "back",
+                        "equipment": "kettlebell",
+                        "gifUrl": "https://api.exercisedb.io/image/qPGTsaQEKukVKH",
+                        "id": "0541",
+                        "name": "kettlebell one arm row",
+                        "target": "upper back"
+                    },
+                    {
+                        "bodyPart": "shoulders",
+                        "equipment": "dumbbell",
+                        "gifUrl": "https://api.exercisedb.io/image/LzHXFlBh5zOqcA",
+                        "id": "0334",
+                        "name": "dumbbell lateral raise",
+                        "target": "delts"
+                    },
+                    {
+                        "bodyPart": "upper arms",
+                        "equipment": "dumbbell",
+                        "gifUrl": "https://api.exercisedb.io/image/wdt3Zfs1O83CnU",
+                        "id": "0315",
+                        "name": "dumbbell incline biceps curl",
+                        "target": "biceps"
+                    },
+                    {
+                        "bodyPart": "upper arms",
+                        "equipment": "cable",
+                        "gifUrl": "https://api.exercisedb.io/image/iqZ8yp6hhmZqnT",
+                        "id": "0241",
+                        "name": "cable triceps pushdown (v-bar)",
+                        "target": "triceps"
+                    }
+                ]
+            },
+            {
+                "workout_name": "Lower Hypertrophy",
+                "exercises": [
+                    {
+                        "bodyPart": "upper legs",
+                        "equipment": "barbell",
+                        "gifUrl": "https://api.exercisedb.io/image/C3YNe3aXW7IWW0",
+                        "id": "0042",
+                        "name": "barbell front squat",
+                        "target": "glutes"
+                    },
+                    {
+                        "bodyPart": "upper legs",
+                        "equipment": "barbell",
+                        "gifUrl": "https://api.exercisedb.io/image/Z0hrBOzGDMM8zS",
+                        "id": "0054",
+                        "name": "barbell lunge",
+                        "target": "glutes"
+                    },
+                    {
+                        "bodyPart": "upper legs",
+                        "equipment": "leverage machine",
+                        "gifUrl": "https://api.exercisedb.io/image/bC0IiVutehZlbq",
+                        "id": "0585",
+                        "name": "lever leg extension",
+                        "target": "quads"
+                    },
+                    {
+                        "bodyPart": "upper legs",
+                        "equipment": "leverage machine",
+                        "gifUrl": "https://api.exercisedb.io/image/IfYdRLJqnCc2Hh",
+                        "id": "0599",
+                        "name": "lever seated leg curl",
+                        "target": "hamstrings"
+                    },
+                    {
+                        "bodyPart": "lower legs",
+                        "equipment": "leverage machine",
+                        "gifUrl": "https://api.exercisedb.io/image/7YOB3m5RO4ImqS",
+                        "id": "0594",
+                        "name": "lever seated calf raise ",
+                        "target": "calves"
+                    },
+                    {
+                        "bodyPart": "lower legs",
+                        "equipment": "sled machine",
+                        "gifUrl": "https://api.exercisedb.io/image/bmZp6wa6fNpjh9",
+                        "id": "1391",
+                        "name": "sled calf press on leg press",
+                        "target": "calves"
+                    }
+                ]
+            }
+        ]
+    }
+]

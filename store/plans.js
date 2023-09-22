@@ -16,7 +16,7 @@ export const actions = {
 
 export const getters = {
     getPlans: (state) => {
-    return state.plans
+        return state.plans
     },
     getPlanByName: (state) => (name) => {
         return state.plans.find(plan => plan.plan_name == name)

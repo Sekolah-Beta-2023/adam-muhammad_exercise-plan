@@ -7,22 +7,17 @@
         <form class="add-plans" v-on:submit.prevent="handleSubmit">
                 <div class="plan-header">
                     <img class="plan-img-logo" src="~/assets/istockphoto-1248698782-612x612.jpg" alt="exercise">
-                    <input v-model="form.plan_name" class="plan-name" type="text" placeholder="Exercise Name">
+                    <input v-model="form.plan_name" class="plan-name" type="text" placeholder="Exercise Name" required>
                 </div>
                 <div class="input-container">
-                    <input class="search-bar-exercise" type="search" name="search" id="search">
-                    <select @change="updatedList()" class="sort-exercise" name="target" id="target" v-model="selectedTarget">
-                        <option value="All">select target</option>
-                        <option value="abs">abs</option>
-                        <option value="quads">quads</option>
-                        <option value="lats">lats</option>
-                        <option value="calves">calves</option>
-                        <option value="pectorals">pectorals</option>
-                        <option value="glutes">glutes</option>
+                    <input class="search-bar-exercise" type="search" name="search" id="search" v-model="searchText">
+                    <select class="sort-exercise" name="target" id="target" v-model="selectedTarget">
+                        <option value="">select target</option>
+                        <option v-for="target in allTarget" :value="target">{{ target }}</option>
                     </select>
                 </div>
                 <div class="list-container">
-                    <label v-for="exercise in sortedExercise" class="exercise-label" :for="exercise.name" :key="exercise.id">
+                    <label v-for="exercise in filteredExercises" class="exercise-label" :for="exercise.name" :key="exercise.id">
                         <input class="exercise-check" type="checkbox" :name="exercise.name" :value="exercise" :id="exercise.name" v-model="form.exercises">
                         <img class="exercise-img" :src="exercise.gifUrl" :alt="exercise.name">
                         <div class="title-desc-container">
@@ -30,15 +25,17 @@
                             <p class="desc-exercise">{{ exercise.target }}</p>
                         </div>
                     </label>
+                    <button class="add-30" @click="addExercise" v-if="hasMoreExercises">Refresh</button>
                 </div>
-                <button class="save-btn">Save</button>
+                <button type="submit" class="save-btn" :disabled="!form.plan_name || !isAtLeastOneCheckboxSelected">Save</button>
         </form>
     </div>
 </template>
 
 <script>
 import ListItem from "@/components/List/ListItem.vue"
-import exerciseData from "@/assets/exercise.json"
+import allTargetMuscles from "@/assets/all_muscles.json"
+import allExercisesData from "@/assets/all_exercise.json"
 
 export default {
     layout: 'dashboard',
@@ -47,30 +44,46 @@ export default {
     },
     data() {
         return{
-            exerciseData: exerciseData,
-            sortedExercise: exerciseData,
-            selectedTarget: "All",
+            allExercises: allExercisesData,
+            allTarget: allTargetMuscles,
+            searchText: "",
+            selectedTarget: "",
+            exerciseLimit: 30,
             form: {
                 plan_name: '',
                 exercises: []
             }
         }
     },
-    mounted() {
-        this.sortedExercise = this.exerciseData
+    computed: {
+        filteredExercises() {
+            let filteredExercises = this.allExercises
+            if (this.searchText) {
+                filteredExercises = filteredExercises.filter((exercise) =>
+                    exercise.name.toLowerCase().includes(this.searchText.toLowerCase())
+                )
+            }
+            if(this.selectedTarget) {
+                filteredExercises = filteredExercises.filter((item) => item.target === this.selectedTarget)
+            }
+            return filteredExercises.slice(0, this.exerciseLimit)
+        },
+        hasMoreExercises() {
+            return this.exerciseLimit <= this.filteredExercises.length;
+        },
+        isAtLeastOneCheckboxSelected() {
+            return this.form.exercises.length > 0
+        },
     },
     methods: {
-        updatedList() {
-            if(this.selectedTarget === "All") {
-                this.sortedExercise = this.exerciseData
-            } else {
-                this.sortedExercise = this.exerciseData.filter((item) => item.target === this.selectedTarget)
-            }
-        },
         handleSubmit() { 
-            console.log(this.form)
             this.$store.dispatch('plans/addPlan', this.form);
             this.$router.go(-1)
+        },
+        addExercise() {
+            if (this.hasMoreExercises) {
+                this.exerciseLimit += 30;
+            }
         }
     }
 

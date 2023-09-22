@@ -1,9 +1,9 @@
 <template>
     <nav class="navbar">
         <div class="navbar-container">
-            <nuxt-link class="nav-link" to="/plan">Plans</nuxt-link>
-            <nuxt-link class="nav-link" to="/calendar">Calendar</nuxt-link>
-            <nuxt-link class="nav-link" to="/profile">Profile</nuxt-link>
+            <nuxt-link class="nav-link" to="/plan" exact>Plans</nuxt-link>
+            <nuxt-link class="nav-link" to="/calendar" exact>Calendar</nuxt-link>
+            <nuxt-link class="nav-link" to="/profile" exact>Profile</nuxt-link>
         </div>
     </nav>
 </template>
@@ -49,6 +49,12 @@
     width: 100px;
     text-align: center;
     text-decoration: none;
+}
+
+.nuxt-link-exact-active {
+    background-color: white;
+    color: #202124;
+    border-radius: 4px;
 }
 
 .nav-link.nuxt-link-exact-active {

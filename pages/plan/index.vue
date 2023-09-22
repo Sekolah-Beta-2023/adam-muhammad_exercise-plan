@@ -6,55 +6,18 @@
                 <div class="exercise-plan" >
                     <nuxt-link class="add-plan" to="/plan/form">+</nuxt-link>
                 </div>
-                <div v-for="plan in plans" class="exercise-plan" >
-                    <nuxt-link class="exercise-plan-link" :to="`/plan/exercise/${plan.plan_name}`">{{ plan.plan_name }}</nuxt-link>
+                <div v-for="plan in plans" class="exercise-plan">
+                    <nuxt-link class="exercise-plan-link" :to="`/plan/exercise/${plan.plan_name}`" >{{plan.plan_name}}</nuxt-link>
                 </div>
             </div>
         </section>
         <section class="plan-list-container">
             <h1 class="plan-list-title">Recommendations</h1>
-            <div class="plan-recommend-container">
-                <h2 class="plan-list-recommend">StrongLifts 5 x 5</h2>
+            <div v-for="plan in recommendation" class="plan-recommend-container">
+                <h2 class="plan-list-recommend">{{plan.plan_name}}</h2>
                 <div class="plan-list">
-                    <div class="exercise-plan" >
-                        <a class="exercise-plan-link" href="#">Workout A</a>
-                    </div>
-                    <div class="exercise-plan" >
-                        <a class="exercise-plan-link" href="#">Workout B</a>
-                    </div>
-                </div>
-            </div>
-            <div class="plan-recommend-container">
-                <h2 class="plan-list-recommend">Power Hypertrophy Upper Lower</h2>
-                <div class="plan-list">
-                    <div class="exercise-plan" >
-                        <a class="exercise-plan-link" href="#">Upper Power</a>
-                    </div>
-                    <div class="exercise-plan" >
-                        <a class="exercise-plan-link" href="#">Lower Power</a>
-                    </div>
-                    <div class="exercise-plan" >
-                        <a class="exercise-plan-link" href="#">Upper Hypertrophy</a>
-                    </div>
-                    <div class="exercise-plan" >
-                        <a class="exercise-plan-link" href="#">Lower Hypertrophy</a>
-                    </div>
-                </div>
-            </div>
-            <div class="plan-recommend-container">
-                <h2 class="plan-list-recommend">Power Hypertrophy Upper Lower</h2>
-                <div class="plan-list">
-                    <div class="exercise-plan" >
-                        <a class="exercise-plan-link" href="#">Upper Power</a>
-                    </div>
-                    <div class="exercise-plan" >
-                        <a class="exercise-plan-link" href="#">Lower Power</a>
-                    </div>
-                    <div class="exercise-plan" >
-                        <a class="exercise-plan-link" href="#">Upper Hypertrophy</a>
-                    </div>
-                    <div class="exercise-plan" >
-                        <a class="exercise-plan-link" href="#">Lower Hypertrophy</a>
+                    <div v-for="workout in plan.workout_list" class="exercise-plan" >
+                        <nuxt-link class="exercise-plan-link" :to="`/plan/recommend_plan/${workout.workout_name}`">{{workout.workout_name}}</nuxt-link>
                     </div>
                 </div>
             </div>
@@ -69,11 +32,14 @@ export default {
     layout: 'dashboard',
     computed: {
         ...mapGetters({
-            getPlans: 'plans/getPlans'
+            getPlans: 'plans/getPlans',
+            getRecommendation: 'recommendation/getRecommendation'
         }),
-
         plans() {
             return this.getPlans
+        },
+        recommendation() {
+            return this.getRecommendation
         }
     }
 }
