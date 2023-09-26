@@ -25,7 +25,7 @@
                             <p class="desc-exercise">{{ exercise.target }}</p>
                         </div>
                     </label>
-                    <button class="add-30" @click="addExercise" v-if="hasMoreExercises">Refresh</button>
+                    <button class="add-30" @click="addExercise" v-if="hasMoreExercises">Load More</button>
                 </div>
                 <button type="submit" class="save-btn" :disabled="!form.plan_name || !isAtLeastOneCheckboxSelected">Save</button>
         </form>
@@ -248,6 +248,13 @@ export default {
     cursor: pointer;
 }
 
-
+.add-30 {
+    background-color: #202124;
+    border: 1px solid #aaa;
+    color: white;
+    font-size: larger;
+    padding: 10px;
+    border-radius: 0px 0px 4px 4px;
+}
 
 </style>
