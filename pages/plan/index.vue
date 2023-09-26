@@ -26,20 +26,42 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex"
+import { mapGetters, mapActions } from "vuex"
+import { fetchExercises } from '~/store/exercises.js'; // Gantilah dengan nama actions yang sesuai
+
 
 export default {
     layout: 'dashboard',
     computed: {
         ...mapGetters({
             getPlans: 'plans/getPlans',
-            getRecommendation: 'recommendation/getRecommendation'
+            getRecommendation: 'recommendation/getRecommendation',
+            getExercises: 'exercises/getAllExercises'
+        }),
+        ...mapActions({
+            fetch: 'exercises/fetchExercises'
         }),
         plans() {
             return this.getPlans
         },
         recommendation() {
             return this.getRecommendation
+        },
+        datafetch() {
+            return this.fetch
+        },
+        exercisess() {
+            return this.getExercises
+        }
+    },
+    async mounted() {
+        try {
+        // Panggil action fetchExercises
+            await this.$store.dispatch('exercises/fetchExercises');
+        // Actions akan menjalankan permintaan Axios atau tugas lainnya
+        // Anda dapat menangani hasil atau kesalahan (error) di sini
+        } catch (error) {
+            console.error('Terjadi kesalahan:', error);
         }
     }
 }

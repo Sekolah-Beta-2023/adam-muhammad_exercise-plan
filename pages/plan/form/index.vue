@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex"
 import ListItem from "@/components/List/ListItem.vue"
 import allTargetMuscles from "@/assets/all_muscles.json"
 import allExercisesData from "@/assets/all_exercise.json"
@@ -56,8 +57,11 @@ export default {
         }
     },
     computed: {
+        ...mapGetters({
+            getExercises: 'exercises/getAllExercises'
+        }),
         filteredExercises() {
-            let filteredExercises = this.allExercises
+            let filteredExercises = this.getExercises
             if (this.searchText) {
                 filteredExercises = filteredExercises.filter((exercise) =>
                     exercise.name.toLowerCase().includes(this.searchText.toLowerCase())
@@ -255,6 +259,7 @@ export default {
     font-size: larger;
     padding: 10px;
     border-radius: 0px 0px 4px 4px;
+    cursor: pointer;
 }
 
 </style>

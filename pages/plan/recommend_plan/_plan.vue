@@ -2,7 +2,7 @@
     <div class="exercise-container">
         <header class="exercise-header">
             <nuxt-link class="back-btn" to="/plan">&#8249;</nuxt-link>
-            <h2 class="exercise-title">{{ this.$route.params.plan }}</h2>
+            <h2 class="exercise-title">{{this.$route.params.plan}}</h2>
         </header>
         <div class="exercise-list-container">
             <div v-for="exercise in recommendPlan(this.$route.params.plan)" class="exercise-list">

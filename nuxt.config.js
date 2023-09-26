@@ -38,7 +38,16 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    '@nuxtjs/axios'
   ],
+
+  axios: {
+    baseURL: 'https://exercisedb.p.rapidapi.com/',
+    headers: {
+      'X-RapidAPI-Key': process.env.HEADER_KEY,
+      'X-RapidAPI-Host': process.env.HEADER_HOST
+    }
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
