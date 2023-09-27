@@ -18,14 +18,14 @@
                 </div>
                 <div class="list-container">
                     <label v-for="exercise in filteredExercises" class="exercise-label" :for="exercise.name" :key="exercise.id">
-                        <input class="exercise-check" type="checkbox" :name="exercise.name" :value="exercise" :id="exercise.name" v-model="form.exercises">
+                        <input class="exercise-check" type="checkbox" :name="exercise.name" :value="exercise.name" :id="exercise.name" v-model="form.exercises">
                         <img class="exercise-img" :src="exercise.gifUrl" :alt="exercise.name">
                         <div class="title-desc-container">
                             <h3 class="title-exercise">{{ exercise.name }}</h3>
                             <p class="desc-exercise">{{ exercise.target }}</p>
                         </div>
                     </label>
-                    <button class="add-30" @click="addExercise" v-if="hasMoreExercises">Load More</button>
+                    <div class="add-30" @click="addExercise" v-if="hasMoreExercises">Load More</div>
                 </div>
                 <button type="submit" class="save-btn" :disabled="!form.plan_name || !isAtLeastOneCheckboxSelected">Save</button>
         </form>
@@ -260,6 +260,7 @@ export default {
     padding: 10px;
     border-radius: 0px 0px 4px 4px;
     cursor: pointer;
+    text-align: center;
 }
 
 </style>

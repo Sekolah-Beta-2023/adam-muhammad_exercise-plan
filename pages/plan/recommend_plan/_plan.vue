@@ -5,7 +5,7 @@
             <h2 class="exercise-title">{{this.$route.params.plan}}</h2>
         </header>
         <div class="exercise-list-container">
-            <div v-for="exercise in recommendPlan(this.$route.params.plan)" class="exercise-list">
+            <div v-for="exercise in recommendPlan" class="exercise-list">
                 <img class="exercise-img" :src="exercise.gifUrl" :alt="exercise.name">
                 <div class="exercise-desc">
                     <h2>{{exercise.name}}</h2>
@@ -22,12 +22,13 @@ export default {
     layout: 'dashboard',
     computed: {
         ...mapGetters({
-            getRecommendByName: 'recommendation/getRecommendByName'
-        })
-    },
-    methods: {
-        recommendPlan(exercise) {
-            return this.getRecommendByName(exercise)
+            getRecommendByName: 'recommendation/getRecommendByName',
+            getExercisesByNames: 'exercises/getExercisesByNames'
+        }),
+        recommendPlan() {
+            const recommend = this.getRecommendByName(this.$route.params.plan)
+            const data = this.getExercisesByNames(recommend)
+            return data
         }
     }
 }

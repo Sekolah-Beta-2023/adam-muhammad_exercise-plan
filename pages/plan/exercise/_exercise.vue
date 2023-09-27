@@ -2,10 +2,10 @@
     <div class="exercise-container">
         <header class="exercise-header">
             <nuxt-link class="back-btn" to="/plan">&#8249;</nuxt-link>
-            <h2 class="exercise-title">{{ plan.plan_name }}</h2>
+            <h2 class="exercise-title">{{ this.$route.params.exercise }}</h2>
         </header>
         <div class="exercise-list-container">
-            <div v-for="exercise in plan.exercises" class="exercise-list">
+            <div v-for="exercise in plan" class="exercise-list">
                 <img class="exercise-img" :src="exercise.gifUrl" :alt="exercise.name">
                 <div class="exercise-desc">
                     <h2>{{exercise.name}}</h2>
@@ -22,10 +22,13 @@ export default {
     layout: 'dashboard',
     computed: {
         ...mapGetters({
-            getPlanByName: 'plans/getPlanByName'
+            getPlanByName: 'plans/getPlanByName',
+            getExercisesByNames: 'exercises/getExercisesByNames'
         }),
         plan() {
-            return this.getPlanByName(this.$route.params.exercise)
+            const plan = this.getPlanByName(this.$route.params.exercise)
+            const data = this.getExercisesByNames(plan.exercises)
+            return data
         }
     }
 }
