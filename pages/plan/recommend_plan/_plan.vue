@@ -1,8 +1,11 @@
 <template>
     <div class="exercise-container">
         <header class="exercise-header">
-            <nuxt-link class="back-btn" to="/plan">&#8249;</nuxt-link>
-            <h2 class="exercise-title">{{this.$route.params.plan}}</h2>
+            <div class="back-btn_container">
+                <nuxt-link class="back-btn" to="/plan">&#8249;</nuxt-link>
+                <h2 class="exercise-title">{{this.$route.params.plan}}</h2>
+            </div>
+            <button class="add_plan" @click="addPlan">Add to Plan</button>
         </header>
         <div class="exercise-list-container">
             <div v-for="exercise in recommendPlan" class="exercise-list">
@@ -30,6 +33,16 @@ export default {
             const data = this.getExercisesByNames(recommend)
             return data
         }
+    },
+    methods: {
+        addPlan() {
+            const recommend = {
+                plan_name: this.$route.params.plan,
+                exercises: this.getRecommendByName(this.$route.params.plan)
+            }
+            this.$store.dispatch('plans/savePlan', recommend);
+            this.$router.go(-1)
+        }
     }
 }
 </script>
@@ -50,7 +63,14 @@ export default {
     height: fit-content;
     color: white;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.back-btn_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
     align-items: center;
 }
 
@@ -68,15 +88,18 @@ export default {
     text-decoration: none;
 }
 
-.back-img {
-    width: 50px;
-    -webkit-filter: grayscale(1) invert(1);
-    filter: grayscale(1) invert(1);
-}
-
 .exercise-title {
     color: white;
     margin-left: 30px;
+}
+
+.add_plan {
+    font-size: 15px;
+    border: 1px solid #aaa;
+    justify-items: flex-end;
+    width: 100px;
+    height: 50px;
+    cursor: pointer;
 }
 
 /*  */

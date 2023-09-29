@@ -1,8 +1,11 @@
 <template>
     <div class="exercise-container">
         <header class="exercise-header">
-            <nuxt-link class="back-btn" to="/plan">&#8249;</nuxt-link>
-            <h2 class="exercise-title">{{ this.$route.params.exercise }}</h2>
+            <div class="back-btn_container">
+                <nuxt-link class="back-btn" to="/plan">&#8249;</nuxt-link>
+                <h2 class="exercise-title">{{ this.$route.params.exercise }}</h2>
+            </div>
+            <button class="delete_plan" @click="deletePlan">Delete</button>
         </header>
         <div class="exercise-list-container">
             <div v-for="exercise in plan" class="exercise-list">
@@ -27,8 +30,18 @@ export default {
         }),
         plan() {
             const plan = this.getPlanByName(this.$route.params.exercise)
-            const data = this.getExercisesByNames(plan.exercises)
-            return data
+            if (plan) {
+                const data = this.getExercisesByNames(plan.exercises);
+                return data;
+            } else {
+                return [];
+            }
+        }
+    },
+    methods: {
+        deletePlan() {
+            this.$store.dispatch('plans/deletePlan', this.$route.params.exercise);
+            this.$router.go(-1)
         }
     }
 }
@@ -50,7 +63,14 @@ export default {
     height: fit-content;
     color: white;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.back-btn_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
     align-items: center;
 }
 
@@ -68,15 +88,18 @@ export default {
     text-decoration: none;
 }
 
-.back-img {
-    width: 50px;
-    -webkit-filter: grayscale(1) invert(1);
-    filter: grayscale(1) invert(1);
-}
-
 .exercise-title {
     color: white;
     margin-left: 30px;
+}
+
+.delete_plan {
+    font-size: 15px;
+    border: 1px solid #aaa;
+    justify-items: flex-end;
+    width: 100px;
+    height: 50px;
+    cursor: pointer;
 }
 
 /*  */

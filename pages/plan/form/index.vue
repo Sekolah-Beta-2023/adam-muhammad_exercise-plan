@@ -81,7 +81,7 @@ export default {
     },
     methods: {
         handleSubmit() { 
-            this.$store.dispatch('plans/addPlan', this.form);
+            this.$store.dispatch('plans/savePlan', this.form);
             this.$router.go(-1)
         },
         addExercise() {

@@ -1,20 +1,46 @@
-export const state = () => ({
+const state = () => ({
     plans: []
 })
 
-export const mutations = {
+const mutations = {
     ADD_PLAN(state, plan) {
         state.plans.unshift(plan)
+        localStorage.removeItem('plans')
+        localStorage.setItem('plans', JSON.stringify(state.plans))
+    },
+    REMOVE_PLAN(state, planName) {
+    const index = state.plans.findIndex(plan => plan.plan_name === planName);
+    if (index !== -1) {
+        state.plans.splice(index, 1);
+        localStorage.setItem('plans', JSON.stringify(state.plans))
+    }
+    },
+    RETRIEVE_DATA(state, plan) {
+        plan.forEach(item => state.plans.push(item))
     }
 }
 
-export const actions = {
-    addPlan(context, plan) {
-        context.commit('ADD_PLAN', plan)
-    }
+const actions = {
+    savePlan({ commit }, planData) {
+        commit('ADD_PLAN', planData)
+    },
+    
+    deletePlan({ commit }, planName) {
+        commit('REMOVE_PLAN', planName)
+    },
+    
+      // Action untuk mengambil data dari localStorage saat aplikasi dimuat
+    loadPlansFromLocalStorage({ commit, state }) {
+        if (process.client && state.plans.length === 0) {
+            const storedPlans = localStorage.getItem('plans')
+            if (storedPlans) {
+                commit('RETRIEVE_DATA', JSON.parse(storedPlans))
+            }
+        }
+    },
 }
 
-export const getters = {
+const getters = {
     getPlans: (state) => {
         return state.plans
     },
@@ -23,9 +49,9 @@ export const getters = {
     }
 }
 
-// export const getters = {
-//     get_plans(state) {
-//         return state.plans
-//     },
-// }
-
+export default {
+    state,
+    getters,
+    mutations,
+    actions,
+}

@@ -56,10 +56,8 @@ export default {
     },
     async mounted() {
         try {
-        // Panggil action fetchExercises
-            await this.$store.dispatch('exercises/fetchExercises');
-        // Actions akan menjalankan permintaan Axios atau tugas lainnya
-        // Anda dapat menangani hasil atau kesalahan (error) di sini
+            await this.$store.dispatch('exercises/fetchExercises')
+            await this.$store.dispatch('plans/loadPlansFromLocalStorage')
         } catch (error) {
             console.error('Terjadi kesalahan:', error);
         }
