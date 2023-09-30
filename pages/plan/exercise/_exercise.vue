@@ -7,14 +7,17 @@
             </div>
             <button class="delete_plan" @click="deletePlan">Delete</button>
         </header>
-        <div class="exercise-list-container">
-            <div v-for="exercise in plan" class="exercise-list">
-                <img class="exercise-img" :src="exercise.gifUrl" :alt="exercise.name">
-                <div class="exercise-desc">
-                    <h2>{{exercise.name}}</h2>
-                    <p>{{exercise.target}}</p>
+        <div class="plan-exercises-container">
+            <div class="exercise-list_container">
+                <div v-for="exercise in plan" class="exercise-list">
+                    <img class="exercise-img" :src="exercise.gifUrl" :alt="exercise.name">
+                    <div class="exercise-desc">
+                        <h2>{{exercise.name}}</h2>
+                        <p>{{exercise.target}}</p>
+                    </div>
                 </div>
             </div>
+            <nuxt-link :to="`/plan/exercise/session/${this.$route.params.exercise}`">Start</nuxt-link>
         </div>
     </div>
 </template>
@@ -104,12 +107,20 @@ export default {
 
 /*  */
 
-.exercise-list-container {
+.plan-exercises-container {
     margin-top: 100px;
+    width: 90vw;
+    height: fit-content;
+    background-color: #202124;
+    border: 1px solid #aaa;
+}
+
+.exercise-list_container {
     border: 1px solid #aaa;
     border-radius: 4px;
     color: white;
     width: 100%;
+    height: 200px;
     overflow: auto;
     -ms-overflow-style: none;  /* Internet Explorer 10+ */
     scrollbar-width: none;  /* Firefox */

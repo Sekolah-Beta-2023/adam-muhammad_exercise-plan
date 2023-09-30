@@ -1,23 +1,23 @@
 <template>
     <div class="plan-container">
-        <section class="plan-list-container">
-            <h1 class="plan-list-title">Your Plan</h1>
+        <section class="plan-list_container">
+            <h1 class="plan-list_title">Your Plan</h1>
             <div class="plan-list">
                 <div class="exercise-plan" >
                     <nuxt-link class="add-plan" to="/plan/form">+</nuxt-link>
                 </div>
                 <div v-for="plan in plans" class="exercise-plan">
-                    <nuxt-link class="exercise-plan-link" :to="`/plan/exercise/${plan.plan_name}`" >{{plan.plan_name}}</nuxt-link>
+                    <nuxt-link class="exercise-plan_link" :to="`/plan/exercise/${plan.plan_name}`" >{{plan.plan_name}}</nuxt-link>
                 </div>
             </div>
         </section>
-        <section class="plan-list-container">
-            <h1 class="plan-list-title">Recommendations</h1>
-            <div v-for="plan in recommendation" class="plan-recommend-container">
-                <h2 class="plan-list-recommend">{{plan.plan_name}}</h2>
+        <section class="plan-list_container">
+            <h1 class="plan-list_title">Recommendations</h1>
+            <div v-for="plan in recommendation" class="plan-recommend_container">
+                <h2 class="plan-list_recommend">{{plan.plan_name}}</h2>
                 <div class="plan-list">
                     <div v-for="workout in plan.workout_list" class="exercise-plan" >
-                        <nuxt-link class="exercise-plan-link" :to="`/plan/recommend_plan/${workout.workout_name}`">{{workout.workout_name}}</nuxt-link>
+                        <nuxt-link class="exercise-plan_link" :to="`/plan/recommend_plan/${workout.workout_name}`">{{workout.workout_name}}</nuxt-link>
                     </div>
                 </div>
             </div>
@@ -77,7 +77,7 @@ export default {
     padding: 10px 0px 100px 0px;
 }
 
-.plan-list-container {
+.plan-list_container {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -86,15 +86,15 @@ export default {
     width: 100%;
 }
 
-.plan-list-title {
+.plan-list_title {
     margin-bottom: 20px;
 }
 
-.plan-recommend-container {
+.plan-recommend_container {
     margin-bottom: 20px;
 }
 
-.plan-list-recommend {
+.plan-list_recommend {
     margin-bottom: 10px;
     font-size: 20px;
 }
@@ -124,7 +124,7 @@ export default {
     align-items: center;
 }
 
-.exercise-plan-link {
+.exercise-plan_link {
     color: white;
     text-decoration: none;
     text-align: center;
