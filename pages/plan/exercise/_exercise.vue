@@ -17,7 +17,7 @@
                     </div>
                 </div>
             </div>
-            <nuxt-link :to="`/plan/exercise/session/${this.$route.params.exercise}`">Start</nuxt-link>
+            <nuxt-link class="start-session_btn" :to="`/plan/exercise/session/${this.$route.params.exercise}`">Start</nuxt-link>
         </div>
     </div>
 </template>
@@ -143,7 +143,12 @@ export default {
 }
 
 
-
+.start-session_btn {
+    color: white;
+    text-decoration: none;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+}
 
 
 </style>

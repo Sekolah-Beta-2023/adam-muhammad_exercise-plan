@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     <div>
       <h1>{{ formattedTime }}</h1>
       <div class="controls">
@@ -69,46 +69,102 @@
       this.stopTimer();
     },
   };
-  </script>
+  </script> -->
 
-<!-- <template>
-    <div>
-        <h2>{{  }}</h2>
-        <h1>{{ this.$route.params.session }}</h1>
-        <ul>
-            <li v-for="exercise in plan">
-                <img class="session-exercise_img" :src="exercise.gifUrl" :alt="exercise.name">
-                <p>{{ exercise.name }}</p>
-            </li>
-        </ul>
-    </div>
+<template>
+  <div>
+    <h2>{{  }}</h2>
+    <h1>{{ this.$route.params.session }}</h1>
+    <ul>
+      <li v-for="exercise in plan">
+        <img class="session-exercise_img" :src="exercise.gifUrl" :alt="exercise.name">
+        <p>{{ exercise.name }}</p>
+        <div class="rep-weight" v-for="(set, index) in exercise.sets">
+          <label :for="`${exercise.name}repetition${index}`">Rep
+            <input v-model="set.rep" type="number" name="repetition" :id="`${exercise.name}repetition${index}`">
+          </label>
+          <label :for="`${exercise.name}weight${index}`">weight(kg)
+            <input v-model="set.weight" type="number" name="weight" :id="`${exercise.name}weight${index}`">
+          </label>
+        </div>
+        <button type="button" @click="tambahSet(exercise.name)">add</button>
+      </li>
+    </ul>
+  </div>
 </template>
 <script>
 import { mapGetters } from "vuex"
 
 export default {
-    layout: 'dashboard',
-    computed: {
-        ...mapGetters({
-            getPlanByName: 'plans/getPlanByName',
-            getExercisesByNames: 'exercises/getExercisesByNames'
-        }),
-        plan() {
-            const plan = this.getPlanByName(this.$route.params.session)
-            if (plan) {
-                const data = this.getExercisesByNames(plan.exercises);
-                return data;
-            } else {
-                return [];
+  layout: 'dashboard',
+  data() {
+    return{
+      form: {
+        nama_plan: this.$route.params.session,
+        exercises: []
+      }
+    }
+  },
+  created() {
+    this.sets()
+  },
+  computed: {
+    ...mapGetters({
+      getPlanByName: 'plans/getPlanByName',
+      getExercisesByNames: 'exercises/getExercisesByNames'
+    }),
+    plan() {
+      const plan = this.getPlanByName(this.$route.params.session)
+
+      if (plan) {
+        const dataExercise = this.getExercisesByNames(plan.exercises);
+        const hasilData = dataExercise.map(exercise => {
+          const matchingPlan = this.form.exercises.find(plan => plan.exercise_name === exercise.name);
+          if (matchingPlan) {
+            exercise.sets = matchingPlan.sets;
+          }
+          return exercise;
+        });
+
+        console.log(hasilData)
+        return hasilData;
+      } else {
+        return [];
+      }
+    }
+  },
+  methods: {
+    sets() {
+      const plan = this.getPlanByName(this.$route.params.session)
+      
+      plan.exercises.forEach(exercise => this.form.exercises.push({
+        exercise_name: exercise,
+        rest_time: "",
+        sets: [
+            {
+              reps: 0,
+              weight: "",
             }
-        }
+        ]
+      }))
     },
+    tambahSet(exerciseName) {
+      const matchingExercise = this.form.exercises.find(exercise => exercise.exercise_name === exerciseName);
+      if (matchingExercise) {
+        matchingExercise.sets.push({
+          "reps": 0,
+          "weight": "",
+          "rest_time": ""
+        });
+      }
+    }
+  }
 }
-</script>
+</script>  
 <style>
 .session-exercise_img {
     width: 30px;
     aspect-ratio: 1;
 }
 
-</style> -->
+</style>
