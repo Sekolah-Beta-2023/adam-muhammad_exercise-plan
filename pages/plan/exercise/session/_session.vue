@@ -11,11 +11,12 @@
         <p>{{ exercise.name }}</p>
         <div class="rep-weight" v-for="(set, index) in exercise.sets">
           <label :for="`${exercise.name}repetition${index}`">Rep
-            <input v-model="set.reps" type="number" name="repetition" :id="`${exercise.name}repetition${index}`">
+            <input v-model="set.reps" type="number" name="repetition" :id="`${exercise.name}repetition${index}`" required>
           </label>
           <label :for="`${exercise.name}weight${index}`">weight(kg)
-            <input v-model="set.weight" type="number" name="weight" :id="`${exercise.name}weight${index}`">
+            <input v-model="set.weight" type="number" name="weight" :id="`${exercise.name}weight${index}`" required>
           </label>
+          <button type="button" @click="deleteSet(exercise, set)">Delete</button>
         </div>
         <button type="button" @click="tambahSet(exercise.name)">add</button>
       </li>
@@ -34,23 +35,27 @@ export default {
         nama_plan: this.$route.params.session,
         body_weight: 0,
         location: "",
-        start_time: "", // Format akan diatur ke "YYYY-MM-DDTHH:mm:ss"
-        end_time: "", // Format akan diatur ke "YYYY-MM-DDTHH:mm:ss"
+        start: {
+          dateTime: "",
+          timeZone: ""
+        },
+        end: {
+          dateTime: "",
+          timeZone: ""
+        },
         exercises: []
       },
       stopwatch: null,
-      stopwatchDisplay: "00:00:00" // Tampilan awal waktu stopwatch
+      stopwatchDisplay: "00:00:00" 
     }
   },
   created() {
     this.sets()
-
-    // Memulai stopwatch saat halaman selesai dimuat
-    this.form.start_time = new Date().toISOString();
+    this.form.start.dateTime = new Date().toISOString();
+    this.setAutoTimeZone();
     this.startStopwatch();
   },
   beforeDestroy() {
-    // Menghentikan stopwatch saat komponen dihancurkan
     this.stopStopwatch();
   },
   computed: {
@@ -85,10 +90,10 @@ export default {
         exercise_name: exercise,
         sets: [
           {
-              reps: 0,
-              weight: "",
-              rest_time: "",
-            }
+            reps: 0,
+            weight: "",
+            rest_time: "",
+          }
         ]
       }))
     },
@@ -102,44 +107,45 @@ export default {
         });
       }
     },
-    save() {
-      // Menghentikan stopwatch saat tombol "Save" ditekan
-      this.stopStopwatch();
-
-      // Menghitung durasi dengan mengurangkan start_time dari end_time
-      if (this.form.start_time && this.form.end_time) {
-        const duration = new Date(this.form.end_time) - new Date(this.form.start_time);
-        // Menyimpan durasi ke dalam form.end_time
-        this.form.end_time = new Date(duration).toISOString();
+    deleteSet(exercise, set) {
+      const matchingExercise = this.form.exercises.find(item => item.exercise_name === exercise.name);
+      if (matchingExercise) {
+        // Temukan indeks set yang akan dihapus
+        const setIndex = matchingExercise.sets.indexOf(set);
+        if (setIndex !== -1) {
+          // Hapus set dari array sets
+          matchingExercise.sets.splice(setIndex, 1);
+        }
       }
-
-      // Sekarang Anda dapat melakukan penyimpanan atau aksi lainnya dengan data di form
+    },
+    save() {
+      this.stopStopwatch();
+      this.form.end.dateTime = new Date().toISOString();
       console.log(this.form);
     },
     startStopwatch() {
-      // Memulai stopwatch dengan interval 1 detik
       this.stopwatch = setInterval(() => {
-        this.form.end_time = new Date().toISOString();
-        // Mengupdate tampilan waktu stopwatch jika Anda ingin menampilkannya di UI
+        this.form.end.dateTime = new Date().toISOString();
         this.updateStopwatchDisplay();
       }, 1000);
     },
     stopStopwatch() {
-      // Menghentikan stopwatch
       clearInterval(this.stopwatch);
     },
     updateStopwatchDisplay() {
-      // Fungsi ini menghitung dan memformat waktu stopwatch
-      if (this.form.start_time) {
-        const start = new Date(this.form.start_time);
-        const end = new Date(this.form.end_time);
+      if (this.form.start.dateTime) {
+        const start = new Date(this.form.start.dateTime);
+        const end = new Date(this.form.end.dateTime);
         const duration = end - start;
         const hours = Math.floor(duration / 3600000);
         const minutes = Math.floor((duration % 3600000) / 60000);
         const seconds = Math.floor((duration % 60000) / 1000);
-        // Format waktu ke dalam format "HH:MM:SS"
         this.stopwatchDisplay = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
       }
+    },
+    setAutoTimeZone() {
+      this.form.start.timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      this.form.end.timeZone = this.form.start.timeZone;
     }
   }
 }
