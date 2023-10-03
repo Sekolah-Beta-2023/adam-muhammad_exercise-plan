@@ -32,7 +32,7 @@ export default {
   data() {
     return{
       form: {
-        nama_plan: this.$route.params.session,
+        session_name: this.$route.params.session,
         body_weight: 0,
         location: "",
         start: {
@@ -122,6 +122,8 @@ export default {
       this.stopStopwatch();
       this.form.end.dateTime = new Date().toISOString();
       console.log(this.form);
+      const exerciseSession = { ...this.form }
+      this.$store.dispatch("session/saveSession", exerciseSession);
     },
     startStopwatch() {
       this.stopwatch = setInterval(() => {

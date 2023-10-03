@@ -13,7 +13,7 @@
 
 </script>
 
-<style>
+<style> 
 .navbar {
     position: fixed;
     left: 50%;
