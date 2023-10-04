@@ -38,7 +38,9 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/auth-next',
+    '@nuxtjs/supabase'
   ],
 
   axios: {
@@ -47,6 +49,22 @@ export default {
       'X-RapidAPI-Key': process.env.HEADER_KEY,
       'X-RapidAPI-Host': process.env.HEADER_HOST
     }
+  },
+
+  auth: {
+    strategies: {
+      google: {
+        clientId: '568918727826-i2gta5g7lj5bmjs2n0ohe3jgia40ut75.apps.googleusercontent.com',
+        codeChallengeMethod: '',
+        responseType: 'token id_token',
+      },
+    },
+    redirect: {
+      login: '/login',
+      logout: '/',
+      callback: '/login',
+      home: '/',
+    },
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
