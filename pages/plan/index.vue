@@ -57,6 +57,7 @@ export default {
     async mounted() {
         try {
             await this.$store.dispatch('exercises/fetchExercises')
+            await this.$store.dispatch('session/loadSessionFromLocalStorage')
             await this.$store.dispatch('plans/loadPlansFromLocalStorage')
         } catch (error) {
             console.error('Terjadi kesalahan:', error);

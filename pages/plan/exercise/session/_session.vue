@@ -122,8 +122,7 @@ export default {
       this.stopStopwatch();
       this.form.end.dateTime = new Date().toISOString();
       console.log(this.form);
-      const exerciseSession = { ...this.form }
-      this.$store.dispatch("session/saveSession", exerciseSession);
+      this.$store.dispatch("session/saveSession", this.form);
     },
     startStopwatch() {
       this.stopwatch = setInterval(() => {

@@ -29,7 +29,6 @@ const actions = {
         commit('REMOVE_PLAN', planName)
     },
     
-      // Action untuk mengambil data dari localStorage saat aplikasi dimuat
     loadPlansFromLocalStorage({ commit, state }) {
         if (process.client && state.plans.length === 0) {
             const storedPlans = localStorage.getItem('plans')

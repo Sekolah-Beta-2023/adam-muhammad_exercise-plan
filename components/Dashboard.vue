@@ -21,6 +21,7 @@
     transform: translate(-50%, -50%);
     display: flex;
     justify-content: space-between;
+    z-index: 100;
 }
 
 .navbar-container {

@@ -1,7 +1,27 @@
 <template>
     <div>
-        <h1>{{session}}</h1>
-        <FullCalendar :options='calendarOptions' />
+        <FullCalendar
+            :options="calendarOptions"
+            @eventClick="showSession"
+        />
+        <div class="session-details" v-if="selectedSession">
+            <h2>{{ selectedSession.session_name }}</h2>
+            <p>Body Weight: {{ selectedSession.body_weight }} kg</p>
+            <p>Location: {{ selectedSession.location }}</p>
+            <p>Start Time: {{ selectedSession.start.dateTime }}</p>
+            <p>End Time: {{ selectedSession.end.dateTime }}</p>
+            <h3>Exercises:</h3>
+            <ul>
+                <li v-for="exercise in selectedSession.exercises" :key="exercise.exercise_name">
+                <strong>{{ exercise.exercise_name }}</strong>
+                <ul>
+                    <li v-for="set in exercise.sets" :key="set.reps">
+                    Reps: {{ set.reps }} - Weight: {{ set.weight }} kg
+                    </li>
+                </ul>
+                </li>
+            </ul>
+        </div>
     </div>
 </template>
 
@@ -9,61 +29,52 @@
 import { mapGetters } from "vuex"
 import FullCalendar from '@fullcalendar/vue'
 import interactionPlugin from '@fullcalendar/interaction'
-import timeGridPlugin from '@fullcalendar/timegrid'
+import dayGridPlugin from '@fullcalendar/daygrid'
 
 export default {
     layout: 'dashboard',
     components: {
-    FullCalendar
+        FullCalendar
     },
     data() {
         return {
             calendarOptions: {
-                plugins: [interactionPlugin, timeGridPlugin],
-                initialView: 'timeGridWeek',
+                plugins: [interactionPlugin, dayGridPlugin],
+                initialView: 'dayGridMonth',
                 nowIndicator: true,
-                editable: true,
-                initialEvents: [
-                    { title: 'nice event', start: new Date() }
-                ]
-            }
+                editable: false,
+                weekends: true,
+                initialEvents: []
+            },
+            selectedSession: null,
         }
     },
     computed: {
         ...mapGetters({
             getSessions: 'session/getSessions',
         }),
-        session() {
-            console.log(this.getSession)
-            return this.getSessions
+    },
+    methods: {
+        showSession(info) {
+            // Ketika event di kalender diklik, tampilkan detail sesi
+            this.selectedSession = info.event.extendedProps.sessionData;
+            console.log(this.selectedSession)
         },
-        calculateDuration() {
-            const data = this.session
-            const startTime = new Date(data.start.dateTime);
-            const endTime = new Date(data.end.dateTime);
-
-            // Menghitung selisih waktu dalam milidetik
-            const durationInMilliseconds = endTime - startTime;
-
-            // Mengonversi durasi dalam milidetik ke dalam jam, menit, dan detik
-            const millisecondsPerHour = 60 * 60 * 1000;
-            const millisecondsPerMinute = 60 * 1000;
-            const millisecondsPerSecond = 1000;
-
-            const hours = Math.floor(durationInMilliseconds / millisecondsPerHour);
-            const minutes = Math.floor((durationInMilliseconds % millisecondsPerHour) / millisecondsPerMinute);
-            const seconds = Math.floor((durationInMilliseconds % millisecondsPerMinute) / millisecondsPerSecond);
-
-            console.log(hours, minutes, seconds)
-            return { hours, minutes, seconds };
+        updateCalendarEvents() {
+            const events = this.getSessions.map((session) => ({
+                title: session.session_name,
+                start: new Date(session.start.dateTime),
+                end: new Date(session.end.dateTime),
+                extendedProps: {
+                    sessionData: session, // Menyimpan data sesi sebagai properti tambahan
+                },
+            }));
+            this.calendarOptions.events = events;
         }
     },
-    async mounted() {
-        try {
-            await this.$store.dispatch('session/loadSessionFromLocalStorage')
-        } catch (error) {
-            console.error('Terjadi kesalahan:', error);
-        }
-    }
+    created() {
+        // Panggil metode untuk menginisialisasi events di kalender
+        this.updateCalendarEvents();
+    },
 }
 </script>
