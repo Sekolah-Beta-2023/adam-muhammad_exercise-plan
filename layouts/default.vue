@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Header />
+        <HomeHeader />
 
         <Nuxt />
 
@@ -9,12 +9,12 @@
 
 <script>
 // memanggil component sesuai lokasi masing masing file
-import Header from "@/components/Header.vue"
+import HomeHeader from "@/components/HomeHeader.vue"
 
 export default {
     // Dideklarasikan agar dapat diakses oleh template
     components: {
-        Header
+        HomeHeader
     }
 }
 </script>

@@ -1,18 +1,20 @@
 <template>
-    <label class="exercise-label" :for="exercise.name">
-        <input class="exercise-check" type="checkbox" :name="exercise.name" :value="exercise.id" :id="exercise.name">
-        <img class="exercise-img" :src="exercise.gifUrl" alt="training">
-        <div class="title-desc-container">
-            <h3 class="title-exercise">{{ exercise.name }}</h3>
-            <p class="desc-exercise">{{ exercise.target }}</p>
-        </div>
-    </label>
+    <div>
+        <label v-for="exercise in filteredExercises" class="exercise-label" :for="exercise.name" :key="exercise.id">
+            <input class="exercise-check" type="checkbox" :name="exercise.name" :value="exercise.name" :id="exercise.name" v-model="form.exercises">
+            <img class="exercise-img" :src="exercise.gifUrl" :alt="exercise.name">
+            <div class="title-desc-container">
+                <h3 class="title-exercise">{{ exercise.name }}</h3>
+                <p class="desc-exercise">{{ exercise.target }}</p>
+            </div>
+        </label>
+    </div>
 </template>
 
 <script>
 export default {
     props: {
-        exercise: Object,
+        filteredExercises: Array,
         required: true,
     }
 }

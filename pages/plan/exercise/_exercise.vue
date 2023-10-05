@@ -1,12 +1,6 @@
 <template>
     <div class="exercise-container">
-        <header class="exercise-header">
-            <div class="back-btn_container">
-                <nuxt-link class="back-btn" to="/plan">&#8249;</nuxt-link>
-                <h2 class="exercise-title">{{ this.$route.params.exercise }}</h2>
-            </div>
-            <button class="delete_plan" @click="deletePlan">Delete</button>
-        </header>
+        <Header :title="this.$route.params.exercise" />
         <div class="plan-exercises-container">
             <div class="exercise-list_container">
                 <div v-for="exercise in plan" class="exercise-list">
@@ -17,15 +11,20 @@
                     </div>
                 </div>
             </div>
+            <button class="delete_plan" @click="deletePlan">Delete</button>
             <nuxt-link class="start-session_btn" :to="`/plan/exercise/session/${this.$route.params.exercise}`">Start</nuxt-link>
         </div>
     </div>
 </template>
 <script>
 import { mapGetters } from "vuex"
+import Header from "@/components/Header"
 
 export default {
-    layout: 'dashboard',
+    layout: 'plain',
+    components: {
+        Header
+    },
     computed: {
         ...mapGetters({
             getPlanByName: 'plans/getPlanByName',
@@ -51,58 +50,10 @@ export default {
 </script>
 <style>
 .exercise-container {
-    background-color: #202124;
+    background-color: white;
     width: 100%;
     height: 100vh;
     padding-bottom: 150px;
-}
-
-.exercise-header {
-    border: 1px solid #aaa;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: fit-content;
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.back-btn_container {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}
-
-.back-btn {
-    font-size: 30px;
-    background-color: #202124;
-    border: none;
-    border-right: 1px solid #aaa;
-    width: 50px;
-    aspect-ratio: 1;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-decoration: none;
-}
-
-.exercise-title {
-    color: white;
-    margin-left: 30px;
-}
-
-.delete_plan {
-    font-size: 15px;
-    border: 1px solid #aaa;
-    justify-items: flex-end;
-    width: 100px;
-    height: 50px;
-    cursor: pointer;
 }
 
 /*  */
@@ -111,14 +62,12 @@ export default {
     margin-top: 100px;
     width: 90vw;
     height: fit-content;
-    background-color: #202124;
-    border: 1px solid #aaa;
+    border: 3px solid black;
 }
 
 .exercise-list_container {
-    border: 1px solid #aaa;
-    border-radius: 4px;
-    color: white;
+    border: 3px solid black;
+    color: black;
     width: 100%;
     height: 200px;
     overflow: auto;
@@ -131,7 +80,7 @@ export default {
 }
 
 .exercise-list {
-    border-bottom: 1px solid #aaa;
+    border-bottom: 1px solid black;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -144,9 +93,9 @@ export default {
 
 
 .start-session_btn {
-    color: white;
+    color: black;
     text-decoration: none;
-    border: 1px solid #aaa;
+    border: 3px solid black;
     border-radius: 4px;
 }
 

@@ -7,31 +7,25 @@
                     <nuxt-link class="add-plan" to="/plan/form">+</nuxt-link>
                 </div>
                 <div v-for="plan in plans" class="exercise-plan">
-                    <nuxt-link class="exercise-plan_link" :to="`/plan/exercise/${plan.plan_name}`" >{{plan.plan_name}}</nuxt-link>
+                    <ExercisePlan :planName="plan.plan_name" />
                 </div>
             </div>
         </section>
-        <section class="plan-list_container">
-            <h1 class="plan-list_title">Recommendations</h1>
-            <div v-for="plan in recommendation" class="plan-recommend_container">
-                <h2 class="plan-list_recommend">{{plan.plan_name}}</h2>
-                <div class="plan-list">
-                    <div v-for="workout in plan.workout_list" class="exercise-plan" >
-                        <nuxt-link class="exercise-plan_link" :to="`/plan/recommend_plan/${workout.workout_name}`">{{workout.workout_name}}</nuxt-link>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <RecommendList :recommendation="recommendation" />
     </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex"
-import { fetchExercises } from '~/store/exercises.js'; // Gantilah dengan nama actions yang sesuai
-
+import MyPlan from "@/components/MyPlan.vue"
+import ExercisePlan from "@/components/ExercisePlan.vue"
+import RecommendList from "@/components/RecommendList.vue"
 
 export default {
     layout: 'dashboard',
+    components: {
+        MyPlan, ExercisePlan, RecommendList
+    },
     computed: {
         ...mapGetters({
             getPlans: 'plans/getPlans',
@@ -72,8 +66,8 @@ export default {
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    background-color: #202124;
-    color: white;
+    background-color: whitesmoke;
+    color: black;
     height: 100%;
     padding: 10px 0px 100px 0px;
 }
@@ -88,6 +82,8 @@ export default {
 }
 
 .plan-list_title {
+    font-family: var(--ff-heading);
+    font-size: 25px;
     margin-bottom: 20px;
 }
 
@@ -115,18 +111,18 @@ export default {
 }
 
 .exercise-plan {
-    background-color: #202124;
+    background-color: white;
     margin-right: 20px;
-    padding: 20px;
-    border: 1px solid #aaa;
-    border-radius: 4px;
+    width: 200px;
+    aspect-ratio: 3/2;
+    border: 3px solid black;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .exercise-plan_link {
-    color: white;
+    color: black;
     text-decoration: none;
     text-align: center;
 }

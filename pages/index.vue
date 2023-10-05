@@ -14,8 +14,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #202124;
-    color: white;
+    font-family: var(--ff-primary);
+    background-color: white;
+    color: black;
     height: 100vh;
 }
 </style>

@@ -1,12 +1,7 @@
 <template>
     <div class="exercise-container">
-        <header class="exercise-header">
-            <div class="back-btn_container">
-                <nuxt-link class="back-btn" to="/plan">&#8249;</nuxt-link>
-                <h2 class="exercise-title">{{this.$route.params.plan}}</h2>
-            </div>
-            <button class="add_plan" @click="addPlan">Add to Plan</button>
-        </header>
+        <Header :title="this.$route.params.plan"/>
+        
         <div class="exercise-list-container">
             <div v-for="exercise in recommendPlan" class="exercise-list">
                 <img class="exercise-img" :src="exercise.gifUrl" :alt="exercise.name">
@@ -15,14 +10,19 @@
                     <p>{{exercise.target}}</p>
                 </div>
             </div>
+            <button class="add_plan" @click="addPlan">Add to Plan</button>
         </div>
     </div>
 </template>
 <script>
 import { mapGetters } from "vuex"
+import Header from "@/components/Header.vue"
 
 export default {
-    layout: 'dashboard',
+    layout: 'plain',
+    components: {
+        Header
+    },
     computed: {
         ...mapGetters({
             getRecommendByName: 'recommendation/getRecommendByName',
@@ -54,44 +54,7 @@ export default {
     padding-bottom: 150px;
 }
 
-.exercise-header {
-    border: 1px solid #aaa;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: fit-content;
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
 
-.back-btn_container {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}
-
-.back-btn {
-    font-size: 30px;
-    background-color: #202124;
-    border: none;
-    border-right: 1px solid #aaa;
-    width: 50px;
-    aspect-ratio: 1;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-decoration: none;
-}
-
-.exercise-title {
-    color: white;
-    margin-left: 30px;
-}
 
 .add_plan {
     font-size: 15px;

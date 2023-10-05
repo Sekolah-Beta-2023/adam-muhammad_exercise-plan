@@ -1,47 +1,45 @@
 <template>
     <div class="form-container">
-        <header class="exercise-header">
-            <nuxt-link class="back-btn" to="/plan">&#8249;</nuxt-link>
-            <h2 class="exercise-title">Build Plan</h2>
-        </header>
+        <Header title="Build Plan"/>
         <form class="add-plans" v-on:submit.prevent="handleSubmit">
-                <div class="plan-header">
-                    <img class="plan-img-logo" src="~/assets/istockphoto-1248698782-612x612.jpg" alt="exercise">
-                    <input v-model="form.plan_name" class="plan-name" type="text" placeholder="Exercise Name" required>
-                </div>
-                <div class="input-container">
-                    <input class="search-bar-exercise" type="search" name="search" id="search" v-model="searchText">
-                    <select class="sort-exercise" name="target" id="target" v-model="selectedTarget">
-                        <option value="">select target</option>
-                        <option v-for="target in allTarget" :value="target">{{ target }}</option>
-                    </select>
-                </div>
-                <div class="list-container">
-                    <label v-for="exercise in filteredExercises" class="exercise-label" :for="exercise.name" :key="exercise.id">
-                        <input class="exercise-check" type="checkbox" :name="exercise.name" :value="exercise.name" :id="exercise.name" v-model="form.exercises">
-                        <img class="exercise-img" :src="exercise.gifUrl" :alt="exercise.name">
-                        <div class="title-desc-container">
-                            <h3 class="title-exercise">{{ exercise.name }}</h3>
-                            <p class="desc-exercise">{{ exercise.target }}</p>
-                        </div>
-                    </label>
-                    <div class="add-30" @click="addExercise" v-if="hasMoreExercises">Load More</div>
-                </div>
-                <button type="submit" class="save-btn" :disabled="!form.plan_name || !isAtLeastOneCheckboxSelected">Save</button>
+            <div class="plan-header">
+                <img class="plan-img-logo" src="~/assets/istockphoto-1248698782-612x612.jpg" alt="exercise">
+                <input v-model="form.plan_name" class="plan-name" type="text" placeholder="Exercise Name" required>
+            </div>
+            <div class="input-container">
+                <input class="search-bar-exercise" type="search" name="search" id="search" v-model="searchText" placeholder="Search">
+                <select class="sort-exercise" name="target" id="target" v-model="selectedTarget">
+                    <option value="">select target</option>
+                    <option v-for="target in allTarget" :value="target">{{ target }}</option>
+                </select>
+            </div>
+            <div class="list-container">
+                <label v-for="exercise in filteredExercises" class="exercise-label" :for="exercise.name" :key="exercise.id">
+                    <input class="exercise-check" type="checkbox" :name="exercise.name" :value="exercise.name" :id="exercise.name" v-model="form.exercises">
+                    <img class="exercise-img" :src="exercise.gifUrl" :alt="exercise.name">
+                    <div class="title-desc-container">
+                        <h3 class="title-exercise">{{ exercise.name }}</h3>
+                        <p class="desc-exercise">{{ exercise.target }}</p>
+                    </div>
+                </label>
+                <div class="add-30" @click="addExercise" v-if="hasMoreExercises">Load More</div>
+            </div>
+            <button type="submit" class="save-btn" :disabled="!form.plan_name || !isAtLeastOneCheckboxSelected">Save</button>
         </form>
     </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex"
-import ListItem from "@/components/List/ListItem.vue"
 import allTargetMuscles from "@/assets/all_muscles.json"
 import allExercisesData from "@/assets/all_exercise.json"
+import Header from "@/components/Header.vue"
+
 
 export default {
-    layout: 'dashboard',
+    layout: 'plain',
     components: {
-        ListItem
+        Header
     },
     data() {
         return{
@@ -96,65 +94,18 @@ export default {
 
 <style>
 
-.exercise-header {
-    background-color: #202124;
-    border: 1px solid #aaa;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: fit-content;
-    color: white;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-}
-
-.exercise-header button {
-    background-color: inherit;
-    color: white;
-}
-
-.back-btn {
-    display: block;
-    background-color: #202124;
-    border: none;
-    border-right: 1px solid #aaa;
-    width: 50px;
-    aspect-ratio: 1;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-decoration: none;
-}
-
-.back-img {
-    width: 50px;
-    -webkit-filter: grayscale(1) invert(1);
-    filter: grayscale(1) invert(1);
-}
-
-.exercise-title {
-    color: white;
-    margin-left: 30px;
-}
-
-/*  */
-
 .form-container {
     min-height: 100%;
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    background-color: #202124;
+    background-color: white;
     padding: 80px 0 150px 0;
 }
 
 .add-plans {
     width: 90%;
-    border-radius: 4px;
-    border: 1px solid #aaa;
+    border: 3px solid black;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -165,33 +116,33 @@ export default {
 .plan-header {
     padding: 20px 30px;
     display: flex;
-    border-bottom: 1px solid #aaa;
+    border-bottom: 2px solid black;
 }
 
 .plan-img-logo {
     width: 50px;
     height: 50px;
     object-fit: cover;
-    border: 1px solid #aaa;
-    border-radius: 4px;
+    border: 1px solid black;
 }
 
 .plan-name {
     background-color: inherit;
     width: 80%;
-    border: none;
-    border-bottom: 2px solid #aaa;
+    border: 2px solid black;
     align-self: flex-end;
     height: 40px;
     margin-left: 20px;
     padding: 0 10px;
     font-size: large;
-    color: white;
+    color: black;
+    font-family: var(--ff-primary);
 }
 
 .plan-name:focus {
     border: none;
     border-bottom: 2px solid black;
+    border-right: 2px solid black;
 }
 
 /* search, sort */
@@ -201,30 +152,26 @@ export default {
     padding: 30px 10px;
 }
 
-
 .search-bar-exercise {
     width: 80%;
     height: 40px;
-    background-color: inherit;
-    border: 1px solid #aaa;
-    border-radius: 4px;
+    border: 3px solid black;
     padding: 5px 20px;
-    color: white;
+    color: black;
+    font-family: var(--ff-primary);
 }
 
 .sort-exercise {
-    background-color: inherit;
-    border: 1px solid #aaa;
-    border-radius: 4px;
+    border: 3px solid black;
     padding: 5px 20px;
-    color: white;
+    color: black;
+    font-family: var(--ff-primary);
 }
 
 /*  */
 
 .list-container {
-    border: 1px solid #aaa;
-    border-radius: 4px;
+    border: 3px solid black;
     align-self: stretch;
     margin: 0 10px 10px 10px;
     max-height: 400px;
@@ -241,11 +188,9 @@ export default {
 }
 
 .save-btn {
-    color: white;
-    background-color: inherit;
-    border: 1px solid #aaa;
+    color: black;
+    border: 4px solid black;
     padding: 10px 20px;
-    border-radius: 4px;
     margin: 0 10px 10px 0;
     aspect-ratio: 3/2;
     align-self: flex-end;
@@ -253,14 +198,14 @@ export default {
 }
 
 .add-30 {
-    background-color: #202124;
-    border: 1px solid #aaa;
-    color: white;
+    border: 4px solid black;
+    color: black;
     font-size: larger;
     padding: 10px;
     border-radius: 0px 0px 4px 4px;
     cursor: pointer;
     text-align: center;
+    font-family: var(--ff-primary);
 }
 
 </style>

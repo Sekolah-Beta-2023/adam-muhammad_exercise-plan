@@ -17,55 +17,34 @@
 .navbar {
     position: fixed;
     left: 50%;
-    bottom: 10px;
+    bottom: 0px;
     transform: translate(-50%, -50%);
-    display: flex;
-    justify-content: space-between;
     z-index: 100;
 }
 
 .navbar-container {
-    font-size: 15px;
+    font-size: 20px;
     display: flex;
     justify-content: center;
-    background: #202124;
-    border: 1px solid #aaa;
-    border-radius: 4px;
-}
-
-.nav-group {
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+    background: white;
+    border: 3px solid black;
 }
 
 .nav-link {
     justify-self: stretch;
-    list-style-type: none;
+    border: 3px solid black;
+    color: black;
     margin: 0;
-    padding: 20px 25px;
     width: 100px;
     text-align: center;
     text-decoration: none;
+    font-family: var(--ff-primary);
 }
 
 .nuxt-link-exact-active {
-    background-color: white;
+    background-color: yellow;
     color: #202124;
     border-radius: 4px;
-}
-
-.nav-link.nuxt-link-exact-active {
-    background-color: white;
-    color: #202124;
-    border-radius: 4px;
-}
-
-.nav-link {
-    color: white;
 }
 
 </style>
