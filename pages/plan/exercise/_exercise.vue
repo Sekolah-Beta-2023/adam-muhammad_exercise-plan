@@ -2,28 +2,23 @@
     <div class="exercise-container">
         <Header :title="this.$route.params.exercise" />
         <div class="plan-exercises-container">
-            <div class="exercise-list_container">
-                <div v-for="exercise in plan" class="exercise-list">
-                    <img class="exercise-img" :src="exercise.gifUrl" :alt="exercise.name">
-                    <div class="exercise-desc">
-                        <h2>{{exercise.name}}</h2>
-                        <p>{{exercise.target}}</p>
-                    </div>
-                </div>
+            <ExerciseList :plan="plan" />
+            <div class="btn_container">
+                <button class="delete-plan_btn" @click="deletePlan">Delete</button>
+                <nuxt-link class="start-session_btn" :to="`/plan/exercise/session/${this.$route.params.exercise}`">Start</nuxt-link>
             </div>
-            <button class="delete_plan" @click="deletePlan">Delete</button>
-            <nuxt-link class="start-session_btn" :to="`/plan/exercise/session/${this.$route.params.exercise}`">Start</nuxt-link>
         </div>
     </div>
 </template>
 <script>
 import { mapGetters } from "vuex"
 import Header from "@/components/Header"
+import ExerciseList from "@/components/ExerciseList.vue"
 
 export default {
     layout: 'plain',
     components: {
-        Header
+        Header, ExerciseList
     },
     computed: {
         ...mapGetters({
@@ -53,51 +48,37 @@ export default {
     background-color: white;
     width: 100%;
     height: 100vh;
-    padding-bottom: 150px;
+    padding: 80px 0 150px 0;
 }
 
 /*  */
 
 .plan-exercises-container {
-    margin-top: 100px;
-    width: 90vw;
+    width: 90%;
     height: fit-content;
     border: 3px solid black;
 }
 
-.exercise-list_container {
+.delete-plan_btn {
+    background-color: white;
     border: 3px solid black;
-    color: black;
-    width: 100%;
-    height: 200px;
-    overflow: auto;
-    -ms-overflow-style: none;  /* Internet Explorer 10+ */
-    scrollbar-width: none;  /* Firefox */
-}
-
-.exercise-list::-webkit-scrollbar { 
-    display: none;  /* Safari and Chrome */
-}
-
-.exercise-list {
-    border-bottom: 1px solid black;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
     padding: 10px 20px;
+    margin-right: 20px;
+    cursor: pointer;
 }
-
-.exercise-desc {
-    margin-left: 10px;
-}
-
 
 .start-session_btn {
     color: black;
     text-decoration: none;
     border: 3px solid black;
-    border-radius: 4px;
+    padding: 10px 20px;
 }
 
+.btn_container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin: 0px 10px 10px 10px;
+}
 
 </style>

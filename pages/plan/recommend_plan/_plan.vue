@@ -3,13 +3,14 @@
         <Header :title="this.$route.params.plan"/>
         
         <div class="exercise-list-container">
-            <div v-for="exercise in recommendPlan" class="exercise-list">
+            <ExerciseList :plan="recommendPlan" />
+            <!-- <div v-for="exercise in recommendPlan" class="exercise-list">
                 <img class="exercise-img" :src="exercise.gifUrl" :alt="exercise.name">
                 <div class="exercise-desc">
                     <h2>{{exercise.name}}</h2>
                     <p>{{exercise.target}}</p>
                 </div>
-            </div>
+            </div> -->
             <button class="add_plan" @click="addPlan">Add to Plan</button>
         </div>
     </div>
@@ -17,11 +18,12 @@
 <script>
 import { mapGetters } from "vuex"
 import Header from "@/components/Header.vue"
+import ExerciseList from "@/components/ExerciseList"
 
 export default {
     layout: 'plain',
     components: {
-        Header
+        Header, ExerciseList
     },
     computed: {
         ...mapGetters({
@@ -48,17 +50,22 @@ export default {
 </script>
 <style>
 .exercise-container {
-    background-color: #202124;
-    width: 100%;
-    height: 100vh;
-    padding-bottom: 150px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: white;
+    padding: 80px 0 150px 0;
 }
 
 
 
 .add_plan {
+    align-self: flex-end;
     font-size: 15px;
-    border: 1px solid #aaa;
+    margin: 0px 10px 10px 10px;
+    border: 3px solid black;
+    background-color: white;
     justify-items: flex-end;
     width: 100px;
     height: 50px;
@@ -68,11 +75,12 @@ export default {
 /*  */
 
 .exercise-list-container {
-    margin-top: 100px;
-    border: 1px solid #aaa;
-    border-radius: 4px;
-    color: white;
-    width: 100%;
+    border: 3px solid black;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items:stretch;
     overflow: auto;
     -ms-overflow-style: none;  /* Internet Explorer 10+ */
     scrollbar-width: none;  /* Firefox */

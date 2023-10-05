@@ -28,7 +28,7 @@
 import { mapGetters } from "vuex"
 
 export default {
-  layout: 'dashboard',
+  layout: 'plain',
   data() {
     return{
       form: {

@@ -43,8 +43,6 @@
 
 .nuxt-link-exact-active {
     background-color: yellow;
-    color: #202124;
-    border-radius: 4px;
 }
 
 </style>
