@@ -1,11 +1,9 @@
 <template>
     <div class="calendar_container">
-        <div class="calendar_calendar-container">
-            <FullCalendar
-                :options="calendarOptions"
-                @eventClick="showSession"
-            />
-        </div>
+        <FullCalendar
+            :options="calendarOptions"
+            @eventClick="showSession"
+        />
         <div class="session-details" v-if="selectedSession">
             <h2>{{ selectedSession.session_name }}</h2>
             <p>Body Weight: {{ selectedSession.body_weight }} kg</p>
