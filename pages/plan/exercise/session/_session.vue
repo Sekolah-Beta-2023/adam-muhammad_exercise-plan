@@ -1,27 +1,38 @@
 <template>
-  <div>
-    <h2>{{  }}</h2>
-    <h1>{{ this.$route.params.session }}</h1>
-    <p class="waktu">{{ stopwatchDisplay }}</p>
-    <input v-model="form.body_weight" type="number" placeholder="body weight (kg)">
-    <input v-model="form.location" type="text" placeholder="location">
-    <ul>
-      <li v-for="exercise in plan">
-        <img class="session-exercise_img" :src="exercise.gifUrl" :alt="exercise.name">
-        <p>{{ exercise.name }}</p>
-        <div class="rep-weight" v-for="(set, index) in exercise.sets">
-          <label :for="`${exercise.name}repetition${index}`">Rep
-            <input v-model="set.reps" type="number" name="repetition" :id="`${exercise.name}repetition${index}`" required>
-          </label>
-          <label :for="`${exercise.name}weight${index}`">weight(kg)
-            <input v-model="set.weight" type="number" name="weight" :id="`${exercise.name}weight${index}`" required>
-          </label>
-          <button type="button" @click="deleteSet(exercise, set)">Delete</button>
+  <div class="session_container">
+    <header>
+      <h1>{{ this.$route.params.session }}</h1>
+    </header>
+    <form>
+      <div class="session_form-head">
+        <p class="waktu">{{ stopwatchDisplay }}</p>
+        <div class="session-weight-location">
+          <input v-model="form.body_weight" type="number" placeholder="body weight (kg)">
+          <input v-model="form.location" type="text" placeholder="location">
         </div>
-        <button type="button" @click="tambahSet(exercise.name)">add</button>
-      </li>
-    </ul>
-    <button @click="save">save session</button>
+      </div>
+      <div class="session_form-body">
+        <div class="session_exercise-container" v-for="exercise in plan">
+          <div class="session_exercise">
+            <div class="session_exercise-desc">
+              <img class="session_exercise-img" :src="exercise.gifUrl" :alt="exercise.name">
+              <p>{{ exercise.name }}</p>
+            </div>
+            <p>&#65086;</p>
+          </div>
+          <div>
+            <div class="session_rep-weight" v-for="(set, index) in exercise.sets">
+              <input v-model="set.reps" type="number" name="repetition" :id="`${exercise.name}repetition${index}`" placeholder="Rep" required>
+              <input v-model="set.weight" type="number" name="weight" :id="`${exercise.name}weight${index}`" placeholder="Weight" required>
+              <button class="session_btn delete" type="button" @click="deleteSet(exercise, set)">&#10005;</button>
+              <button class="session_btn done" type="button" >&#10004;</button>
+            </div>
+            <button type="button" @click="tambahSet(exercise.name)">add</button>
+          </div>
+        </div>
+      </div>
+      <button @click="save">save session</button>
+    </form>
   </div>
 </template>
 <script>
@@ -152,9 +163,64 @@ export default {
 }
 </script>  
 <style>
-.session-exercise_img {
-    width: 30px;
-    aspect-ratio: 1;
+.session_container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: white;
+  padding: 80px 0 150px 0;
+}
+
+.session_form-head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.session_exercise-container {
+  border-bottom: 10px;
+}
+
+.session_exercise {
+  border: 3px solid black;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 10px;
+}
+
+.session_exercise-desc {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.session_exercise-img {
+  border: 1px solid black;  
+  width: 50px;
+  aspect-ratio: 1;
+  margin-right: 10px;
+}
+
+.session_rep-weight {
+  border: 3px solid black;
+  padding: 10px;
+}
+
+.session_btn {
+  background-color: inherit;
+  border: 1px solid black;
+  border-radius: 0;
+}
+
+.delete {
+  background-color: red;
+}
+
+.done {
+  background-color: greenyellow;
 }
 
 </style>

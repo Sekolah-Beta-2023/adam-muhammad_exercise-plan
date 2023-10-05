@@ -1,9 +1,11 @@
 <template>
-    <div>
-        <FullCalendar
-            :options="calendarOptions"
-            @eventClick="showSession"
-        />
+    <div class="calendar_container">
+        <div class="calendar_calendar-container">
+            <FullCalendar
+                :options="calendarOptions"
+                @eventClick="showSession"
+            />
+        </div>
         <div class="session-details" v-if="selectedSession">
             <h2>{{ selectedSession.session_name }}</h2>
             <p>Body Weight: {{ selectedSession.body_weight }} kg</p>
@@ -78,3 +80,37 @@ export default {
     },
 }
 </script>
+<style>
+.calendar_container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: white;
+    padding: 80px 0 150px 0;
+}
+
+.calendar_calendar-container {
+    max-width: 500px;
+}
+
+.fc {
+    font-family: var(--ff-primary);
+}
+
+.fc-toolbar-title {
+    font-family: var(--ff-heading);
+}
+
+.fc .fc-button-primary {
+    background-color: inherit;
+    border: 2px solid black;
+    color: black;
+    border-radius: 0;
+}
+
+.fc-theme-standard .fc-scrollgrid {
+    border: 1px solid black;
+}
+
+</style>
