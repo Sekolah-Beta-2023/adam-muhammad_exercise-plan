@@ -1,6 +1,6 @@
 <template>
     <header class="home-header_container">
-        <h2 class="home-header_title fs-600">Exercise Plan</h2>
+        <h2 class="home-header_title fs-600">PlanEx</h2>
         <nuxt-link class="home-header_btn" to="/plan">Dashboard</nuxt-link>
     </header>
 </template>

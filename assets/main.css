@@ -72,6 +72,7 @@ html:focus-within {
 html,
 body {
     height: 100%;
+    font-family: var(--ff-primary);
 }
 
 /* Set core body defaults */
