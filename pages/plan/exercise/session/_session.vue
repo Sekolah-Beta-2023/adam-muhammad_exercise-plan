@@ -1,37 +1,40 @@
 <template>
   <div class="session_container">
-    <header>
-      <h1>{{ this.$route.params.session }}</h1>
+    <header class="session_header-container">
+        <div class="session_header-back-btn">&#10005;</div>
+        <h2 class="session_header-title">{{ stopwatchDisplay }}</h2>
     </header>
-    <form>
+    <form class="session_form-container">
       <div class="session_form-head">
-        <p class="waktu">{{ stopwatchDisplay }}</p>
+        <p class="title">{{ this.$route.params.session }}</p>
         <div class="session-weight-location">
           <input v-model="form.body_weight" type="number" placeholder="body weight (kg)">
           <input v-model="form.location" type="text" placeholder="location">
         </div>
       </div>
       <div class="session_form-body">
-        <div class="session_exercise-container" v-for="exercise in plan">
-          <div class="session_exercise">
+        <div class="session_exercise-container" v-for="(exercise, i) in plan">
+          <div class="session_exercise" @click="toggleSession(i)">
             <div class="session_exercise-desc">
               <img class="session_exercise-img" :src="exercise.gifUrl" :alt="exercise.name">
               <p>{{ exercise.name }}</p>
             </div>
             <p>&#65086;</p>
           </div>
-          <div>
-            <div class="session_rep-weight" v-for="(set, index) in exercise.sets">
+          <div class="session_rep-weight" v-for="(set, index) in exercise.sets" v-if="activeSessionIndex === i">
+            <div>
               <input v-model="set.reps" type="number" name="repetition" :id="`${exercise.name}repetition${index}`" placeholder="Rep" required>
               <input v-model="set.weight" type="number" name="weight" :id="`${exercise.name}weight${index}`" placeholder="Weight" required>
+            </div>
+            <div>
               <button class="session_btn delete" type="button" @click="deleteSet(exercise, set)">&#10005;</button>
               <button class="session_btn done" type="button" >&#10004;</button>
             </div>
-            <button type="button" @click="tambahSet(exercise.name)">add</button>
           </div>
+          <button class="session_add-btn" type="button" @click="tambahSet(exercise.name)" v-if="activeSessionIndex === i">add</button>          
         </div>
       </div>
-      <button @click="save">save session</button>
+      <button class="session_save-btn" @click="save">save session</button>
     </form>
   </div>
 </template>
@@ -57,7 +60,8 @@ export default {
         exercises: []
       },
       stopwatch: null,
-      stopwatchDisplay: "00:00:00" 
+      stopwatchDisplay: "00:00:00",
+      activeSessionIndex: null,
     }
   },
   created() {
@@ -158,69 +162,157 @@ export default {
     setAutoTimeZone() {
       this.form.start.timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
       this.form.end.timeZone = this.form.start.timeZone;
-    }
+    },
+    toggleSession(index) {
+      // Memeriksa apakah session ini sudah terbuka atau tidak, kemudian mengubah statusnya
+      if (this.activeSessionIndex === index) {
+        // Jika session sedang terbuka, maka tutup
+        this.activeSessionIndex = null;
+      } else {
+        // Jika session tidak terbuka, maka buka
+        this.activeSessionIndex = index;
+      }
+    },
   }
 }
 </script>  
 <style>
+.session_header-container {
+    border: 3px solid black;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: fit-content;
+    color: black;
+    background-color: white;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.session_header-back-btn {
+    font-size: 30px;
+    background-color: white;
+    border: 3px solid black;
+    width: 50px;
+    aspect-ratio: 1;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.session_header-title {
+    color: black;
+    font-family: var(--ff-heading);
+    font-size: 30px;
+    margin-left: 30px;
+}
+
 .session_container {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  background-color: white;
-  padding: 80px 0 150px 0;
+min-height: 100vh;
+display: flex;
+flex-direction: column;
+justify-content: flex-start;
+align-items: center;
+background-color: white;
+padding: 80px 0 150px 0;
+}
+
+.session_form-container {
+    width: 90%;
+    border: 3px solid black;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items:stretch;
 }
 
 .session_form-head {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 30px;
+    padding: 20px;
+}
+
+.session_form-head > .title {
+    font-family: var(--ff-heading);
+    font-size: 30px;
+}
+
+.session_weight-location > input {
+    border: 1px solid black;
 }
 
 .session_exercise-container {
-  border-bottom: 10px;
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
 }
 
+
 .session_exercise {
-  border: 3px solid black;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 10px;
+    border: 3px solid black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 30px;
+    align-self: stretch;
 }
 
 .session_exercise-desc {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
+display: flex;
+align-items: center;
 }
 
 .session_exercise-img {
-  border: 1px solid black;  
-  width: 50px;
-  aspect-ratio: 1;
-  margin-right: 10px;
+border: 1px solid black;  
+width: 50px;
+aspect-ratio: 1;
+margin-right: 10px;
 }
 
 .session_rep-weight {
-  border: 3px solid black;
-  padding: 10px;
+    border: 3px solid black;
+    padding: 10px;
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
 }
 
 .session_btn {
-  background-color: inherit;
-  border: 1px solid black;
-  border-radius: 0;
+background-color: inherit;
+border: 1px solid black;
+border-radius: 0;
 }
 
 .delete {
-  background-color: red;
+background-color: red;
 }
 
 .done {
-  background-color: greenyellow;
+background-color: greenyellow;
 }
 
+.session_add-btn {
+    border: 2px solid black;
+    border-radius: 0;
+    background-color: inherit;
+    width: 90%;
+    justify-self: stretch;
+}
+
+.session_save-btn {
+    align-self: flex-end;
+    margin: 10px;
+    border: 3px solid black;
+    background-color: inherit;
+    padding: 10px;
+    cursor: pointer;
+}
 </style>

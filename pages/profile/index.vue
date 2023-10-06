@@ -41,8 +41,7 @@
                     <button class="session_btn done" type="button" >&#10004;</button>
                 </div>
             </div>
-
-            <button type="button" >add</button>
+            <button class="session_add-btn" type="button">add</button>
         </div>
         <div class="session_exercise-container">
             <div class="session_exercise">
@@ -73,8 +72,7 @@
                     <button class="session_btn done" type="button" >&#10004;</button>
                 </div>
             </div>
-
-            <button type="button" >add</button>
+            <button class="session_add-btn" type="button">add</button>
         </div>
         <div class="session_exercise-container">
             <div class="session_exercise">
@@ -105,11 +103,11 @@
                         <button class="session_btn done" type="button" >&#10004;</button>
                     </div>
                 </div>
-            <button type="button" >add</button>
+                <button class="session_add-btn" type="button">add</button>
         </div>
     </div>
 
-    <button >save session</button>
+    <button class="session_save-btn">save session</button>
     </form>
 </div>
 </template>
@@ -319,6 +317,8 @@ padding: 80px 0 150px 0;
     align-items: center;
 }
 
+.session_exercise-container > 
+
 .session_exercise {
     border: 3px solid black;
     display: flex;
@@ -360,6 +360,22 @@ background-color: red;
 
 .done {
 background-color: greenyellow;
+}
+
+.session_add-btn {
+    border: 2px solid black;
+    border-radius: 0;
+    background-color: inherit;
+    width: 90%;
+    justify-self: stretch;
+}
+
+.session_save-btn {
+    align-self: flex-end;
+    margin: 10px;
+    border: 3px solid black;
+    background-color: inherit;
+    padding: 10px;
 }
 
 </style>
