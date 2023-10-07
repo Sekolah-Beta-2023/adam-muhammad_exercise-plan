@@ -1,4 +1,3 @@
-import axios from 'axios';
 
 const state = {
     exercises: [],
@@ -16,8 +15,18 @@ const actions = {
             if (state.exercises.length > 0) {
                 return
             }
+
+            const options = {
+                method: 'GET',
+                url: 'https://exercisedb.p.rapidapi.com/exercises',
+                params: {limit: '1324'},
+                headers: {
+                    'X-RapidAPI-Key': 'd4a81426e9msh5ba0640ee5d367cp1f3326jsn22f0855623bf',
+                    'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com'
+                }
+            };
             
-            const response = await this.$axios.get('/exercises', {params: {limit: '1324'}})
+            const response = await this.$axios.request(options);
             const exercises = response.data
             commit('SET_EXERCISES', exercises)
 

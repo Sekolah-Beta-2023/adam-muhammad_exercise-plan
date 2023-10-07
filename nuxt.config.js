@@ -1,3 +1,5 @@
+
+
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -27,6 +29,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    { src: '@/plugins/supabase.client.js', ssr: false },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -41,13 +44,13 @@ export default {
     '@nuxtjs/axios',
   ],
 
-  axios: {
-    baseURL: 'https://exercisedb.p.rapidapi.com/',
-    headers: {
-      'X-RapidAPI-Key': process.env.HEADER_KEY,
-      'X-RapidAPI-Host': process.env.HEADER_HOST
-    }
-  },
+  // axios: {
+  //   baseURL: 'https://exercisedb.p.rapidapi.com/',
+  //   headers: {
+  //     'X-RapidAPI-Key': process.env.HEADER_KEY,
+  //     'X-RapidAPI-Host': process.env.HEADER_HOST
+  //   }
+  // },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
