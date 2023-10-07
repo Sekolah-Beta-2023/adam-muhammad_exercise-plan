@@ -50,11 +50,9 @@ export default {
 </script>
 <style>
 .exercise-container {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
     background-color: white;
+    width: 100%;
+    height: 100vh;
     padding: 80px 0 150px 0;
 }
 

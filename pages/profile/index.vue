@@ -9,6 +9,7 @@
             <button @click="logout">Logout</button>
             <!-- <div v-if="$store.state.googleCalendarData"> -->
                 <!-- <p>Google Calendar Data: {{ $store.state.googleCalendarData }}</p> -->
+            <p>{{ calendar }}</p>        
         </div>
     </div>
 </template>
@@ -26,10 +27,16 @@ export default {
     computed: {
         ...mapGetters({
             getAuth: 'supabase/getAuth',
+            getCalendarList: 'supabase/getCalendarList'
         }),
         dataAuth() {
             console.log(this.getAuth)
             return this.getAuth
+        },
+        calendar() {
+            this.$store.dispatch('supabase/getCalendarList')
+            console.log('masuk computed calendar')
+            return this.getCalendarList
         }
     },
     methods: {

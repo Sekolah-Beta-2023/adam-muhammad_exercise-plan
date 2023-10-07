@@ -1,7 +1,6 @@
 export const state = () => ({
-    // user: null,
-    // googleCalendarData: null,
-    googleAuth: null
+    googleAuth: null,
+    calendar_list: null,
 });
 
 export const mutations = {
@@ -11,8 +10,8 @@ export const mutations = {
     CLEAR_AUTH(state) {
         state.googleAuth = null;
     },
-    SET_GOOGLE_CALENDAR_DATA(state, data) {
-        state.googleCalendarData = data;
+    SET_CALENDAR_LIST(state, data) {
+        state.calendar_list = data
     },
 };
 
@@ -20,10 +19,14 @@ export const actions = {
     async loginWithGoogle() {
         try {
             // Gunakan Supabase untuk melakukan otentikasi dengan Google
-            const { user, session, error } = await this.$supabase.auth.signInWithOAuth({
+            const { data, error } = await this.$supabase.auth.signInWithOAuth({
                 provider: 'google',
                 options: {
-                    scopes: 'https://www.googleapis.com/auth/calendar'
+                    scopes: 'https://www.googleapis.com/auth/calendar',
+                    queryParams: {
+                        access_type: 'offline',
+                        prompt: 'consent',
+                    },
                 },
             });
         } catch (error) {
@@ -51,13 +54,32 @@ export const actions = {
         }
     },
 
-    getListCalendar() {
-        
+    async getCalendarList({state}) {
+        try {
+            console.log('masuk action calendar')
+            console.log(state.googleAuth.provider_token)
+            const options = {
+                method: 'GET',
+                url: 'https://www.googleapis.com/calendar/v3/users/me/calendarList',
+                headers: {
+                    'Authentication': 'Bearer ' + state.googleAuth.provider_token
+                }
+            };
+            
+            const response = await this.$axios.request(options);
+            const calendarList = response.data
+            commit('SET_CALENDAR_LIST', calendarList)
+        } catch(error) {
+
+        }
     }
 }
 
 export const getters = {
     getAuth: (state) => {
         return state.googleAuth
+    },
+    getCalendarList: (state) => {
+        return state.calendar_list
     }
 }
