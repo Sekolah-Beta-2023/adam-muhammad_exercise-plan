@@ -2,6 +2,7 @@ export const state = () => ({
     googleAuth: null,
     calendar_list: null,
     authData: null,
+    provider: null,
 });
 
 export const mutations = {
@@ -13,6 +14,9 @@ export const mutations = {
     },
     SET_AUTH_DATA(state, data) {
         state.authData= data
+    },
+    SET_PROVIDER(state, token) {
+        state.provider = token
     },
     SET_CALENDAR_LIST(state, data) {
         state.calendar_list = data
@@ -26,14 +30,21 @@ export const actions = {
             const data = await this.$supabase.auth.signInWithOAuth({
                 provider: 'google',
                 options: {
-                    // scopes: 'https://www.googleapis.com/auth/calendar',
+                    scopes: 'https://www.googleapis.com/auth/calendar',
                     queryParams: {
                         access_type: 'offline',
                         prompt: 'consent',
                     },
                 },
             });
-            console.log(data)
+
+            // const {dataauth, error} = await this.$supabase.auth.getSession()
+            // if(error) {
+            //     throw error
+            // }
+            // console.log('session ', dataauth.session.provider_refresh_token)
+            // commit('SET_PROVIDER', dataauth.session.provider_refresh_token)
+            // console.log(data)
         } catch (error) {
             console.error('Google login error:', error);
         }   
@@ -51,30 +62,44 @@ export const actions = {
         }
     },
 
-    getAuth({commit}) {
+    async getAuth({commit}) {
         if (process.client) {
             const localAuth = localStorage.getItem('sb-aabcdkxxkotuahyxoehv-auth-token')
             console.log(JSON.parse(localAuth))
             commit('SET_AUTH', JSON.parse(localAuth));
+
         }
+    },
+
+    async getProvider({commit}) {
+        const {data, error} = await this.$supabase.auth.getSession()
+        if(error) {
+            throw error
+        }
+        console.log('session ', data.session.provider_refresh_token)
+        commit('SET_PROVIDER', data.session.provider_refresh_token)
+
     },
 
     async getCalendarList({state}) {
         try {
-            console.log('masuk action calendar')
-            console.log(state.googleAuth.provider_refresh_token)
-            const options = {
-                method: 'GET',
-                
-                headers: {
-                    'Content-Type': 'application/json',
-                    // 'Access-Control-Allow-Origin': "*",
-                    // 'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-                    'Authorization': 'bearer ' + state.googleAuth.provider_refresh_token
-                }
-            };
+            await console.log('masuk action calendar')
+            // console.log(state.googleAuth.provider_token)
+            // const options = {
+            //     method: 'GET',
+            //     url: 'https://www.googleapis.com/calendar/v3/users/me/calendarList',
+            //     headers: {
+            //         // 'Content-Type': 'application/json',
+            //         // 'Access-Control-Allow-Origin': "*",
+            //         // 'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+            //         'Authorization': 'bearer ' + state.googleAuth.provider_token
+            //     }
+            // };
             
-            const response = await fetch('https://www.googleapis.com/calendar/v3/users/me/calendarList', options);
+            
+
+
+            const response = await this.$axios.$get('https://www.googleapis.com/calendar/v3/users/me/calendarList', {'Authorization': 'bearer ' +  state.provider});
             const calendarList = response.data
             console.log(calendarList)
             console.log('lewat calendar')

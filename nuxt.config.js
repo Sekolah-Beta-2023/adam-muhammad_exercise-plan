@@ -19,6 +19,8 @@ export default {
     ],
     script: [
       // { src: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js', body: true }
+      { src: "https://apis.google.com/js/api.js", defer: true, async: true, },
+      { src: "https://accounts.google.com/gsi/client", defer: true, async: true, }
     ]
   },
 
@@ -43,14 +45,6 @@ export default {
   modules: [
     '@nuxtjs/axios',
   ],
-
-  // axios: {
-  //   baseURL: 'https://exercisedb.p.rapidapi.com/',
-  //   headers: {
-  //     'X-RapidAPI-Key': process.env.HEADER_KEY,
-  //     'X-RapidAPI-Host': process.env.HEADER_HOST
-  //   }
-  // },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {

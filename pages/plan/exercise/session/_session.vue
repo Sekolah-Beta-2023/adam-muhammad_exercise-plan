@@ -4,7 +4,7 @@
         <div class="session_header-back-btn">&#10005;</div>
         <h2 class="session_header-title">{{ stopwatchDisplay }}</h2>
     </header>
-    <form class="session_form-container">
+    <form class="session_form-container" v-on:submit.prevent="save">
       <div class="session_form-head">
         <p class="title">{{ this.$route.params.session }}</p>
         <div class="session-weight-location">
@@ -28,13 +28,12 @@
             </div>
             <div>
               <button class="session_btn delete" type="button" @click="deleteSet(exercise, set)">&#10005;</button>
-              <button class="session_btn done" type="button" >&#10004;</button>
             </div>
           </div>
           <button class="session_add-btn" type="button" @click="tambahSet(exercise.name)" v-if="activeSessionIndex === i">add</button>          
         </div>
       </div>
-      <button class="session_save-btn" @click="save">save session</button>
+      <button class="session_save-btn">save session</button>
     </form>
   </div>
 </template>
@@ -64,8 +63,11 @@ export default {
       activeSessionIndex: null,
     }
   },
-  created() {
-    this.sets()
+  mounted() {
+    const plan = this.getPlanByName(this.$route.params.session);
+    if (plan) {
+      this.sets(plan);
+    }
     this.form.start.dateTime = new Date().toISOString();
     this.setAutoTimeZone();
     this.startStopwatch();
@@ -76,7 +78,8 @@ export default {
   computed: {
     ...mapGetters({
       getPlanByName: 'plans/getPlanByName',
-      getExercisesByNames: 'exercises/getExercisesByNames'
+      getExercisesByNames: 'exercises/getExercisesByNames',
+      getCalendarId: 'google/getCalendarId'
     }),
     plan() {
       const plan = this.getPlanByName(this.$route.params.session)
@@ -98,9 +101,8 @@ export default {
     }
   },
   methods: {
-    sets() {
-      const plan = this.getPlanByName(this.$route.params.session)
-      
+    sets(plan) {
+      console.log(plan)
       plan.exercises.forEach(exercise => this.form.exercises.push({
         exercise_name: exercise,
         sets: [
@@ -116,28 +118,77 @@ export default {
       const matchingExercise = this.form.exercises.find(exercise => exercise.exercise_name === exerciseName);
       if (matchingExercise) {
         matchingExercise.sets.push({
-          "reps": 0,
-          "weight": "",
-          "rest_time": ""
+          reps: 0,
+          weight: "",
+          rest_time: ""
         });
       }
     },
     deleteSet(exercise, set) {
       const matchingExercise = this.form.exercises.find(item => item.exercise_name === exercise.name);
       if (matchingExercise) {
-        // Temukan indeks set yang akan dihapus
         const setIndex = matchingExercise.sets.indexOf(set);
         if (setIndex !== -1) {
-          // Hapus set dari array sets
           matchingExercise.sets.splice(setIndex, 1);
         }
       }
+    },
+    generateCalendarDescription(data) {
+      // Membangun deskripsi awal dengan informasi umum
+      let description = `**Nama Sesi:** ${data.session_name}\n`;
+      description += `**Berat Badan:** ${data.body_weight} kg\n`;
+      description += `**Lokasi:** ${data.location}\n`;
+      description += `**Waktu Mulai:** ${new Date(data.start.dateTime).toLocaleString('id-ID', { timeZone: data.start.timeZone })}\n`;
+      description += `**Waktu Selesai:** ${new Date(data.end.dateTime).toLocaleString('id-ID', { timeZone: data.end.timeZone })}\n\n`;
+
+      // Menambahkan daftar latihan
+      description += `**Daftar Latihan:**\n`;
+
+      data.exercises.forEach((exercise, index) => {
+        description += `${index + 1}. **${exercise.exercise_name}**\n`;
+        exercise.sets.forEach((set, setIndex) => {
+          description += `   - Set ${setIndex + 1}: ${set.reps} repetisi, Berat ${set.weight} kg\n`;
+        });
+        description += `   - Istirahat: Tidak ada istirahat di antara set\n\n`;
+      });
+
+      return description;
+    },
+    async generateEvent() {
+      const event = {
+        'summary': `PlanEx ${this.form.session_name}`,
+        'description': this.generateCalendarDescription(this.form),
+        'start': {
+          'dateTime' : this.form.start.dateTime,
+          'timeZone' : this.form.start.timeZone
+        },
+        'end': {
+          'dateTime' : this.form.end.dateTime,
+          'timeZone' : this.form.end.timeZone
+        }
+      }
+
+      console.log(event)
+
+      console.log(this.getCalendarId)
+      let request 
+      try {
+        request = await gapi.client.calendar.events.insert({
+          'calendarId': this.getCalendarId,
+          'resource': event
+        });
+      } catch(err) {
+        console.log(err)
+      }
+      console.log('sukses', request)
     },
     save() {
       this.stopStopwatch();
       this.form.end.dateTime = new Date().toISOString();
       console.log(this.form);
-      this.$store.dispatch("session/saveSession", this.form);
+      this.generateEvent()
+      // this.$router.go('/plan')
+      // this.$store.dispatch("session/saveSession", this.form);
     },
     startStopwatch() {
       this.stopwatch = setInterval(() => {
@@ -164,12 +215,9 @@ export default {
       this.form.end.timeZone = this.form.start.timeZone;
     },
     toggleSession(index) {
-      // Memeriksa apakah session ini sudah terbuka atau tidak, kemudian mengubah statusnya
       if (this.activeSessionIndex === index) {
-        // Jika session sedang terbuka, maka tutup
         this.activeSessionIndex = null;
       } else {
-        // Jika session tidak terbuka, maka buka
         this.activeSessionIndex = index;
       }
     },

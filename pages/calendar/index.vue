@@ -22,6 +22,8 @@
                 </li>
             </ul>
         </div>
+        <button @click="listUpcomingEvents">event</button>
+        <pre id="content" style="white-space: pre-wrap;"></pre>
     </div>
 </template>
 
@@ -53,6 +55,7 @@ export default {
         ...mapGetters({
             getSessions: 'session/getSessions',
         }),
+
     },
     methods: {
         showSession(info) {
@@ -70,6 +73,41 @@ export default {
                 },
             }));
             this.calendarOptions.events = events;
+        },
+        async listUpcomingEvents() {
+            let response = null
+            try {
+                response = await gapi.client.calendar.calendarList.list()
+            } catch (err) {
+                document.getElementById('content').innerText = err.message;
+                return;
+            }
+
+            console.log(response)
+            const hasPlanExApp = response.result.items.some(item => item.summary === "PlanEx App");
+
+            if (hasPlanExApp) {
+                console.log("Ada yang memiliki summary 'PlanEx App'");
+            } else {
+                try {
+                    const buatCalendar = await gapi.client.calendar.calendars.insert({"summary": "PlanEx App"})
+                    console.log(buatCalendar)
+                } catch(err) {
+                    console.log(err)
+                }
+                console.log("Tidak ada yang memiliki summary 'PlanEx App'");
+
+            }
+            // const events = response.result.items;
+            // if (!events || events.length == 0) {
+            // document.getElementById('content').innerText = 'No events found.';
+            // return;
+            // }
+            // // Flatten to string to display
+            // const output = events.reduce(
+            //     (str, event) => `${str}${event.summary} (${event.start.dateTime || event.start.date})\n`,
+            //     'Events:\n');
+            // document.getElementById('content').innerText = output;
         }
     },
     created() {
