@@ -4,26 +4,8 @@
             :options="calendarOptions"
             @eventClick="showSession"
         />
-        <div class="session-details" v-if="selectedSession">
-            <h2>{{ selectedSession.session_name }}</h2>
-            <p>Body Weight: {{ selectedSession.body_weight }} kg</p>
-            <p>Location: {{ selectedSession.location }}</p>
-            <p>Start Time: {{ selectedSession.start.dateTime }}</p>
-            <p>End Time: {{ selectedSession.end.dateTime }}</p>
-            <h3>Exercises:</h3>
-            <ul>
-                <li v-for="exercise in selectedSession.exercises" :key="exercise.exercise_name">
-                <strong>{{ exercise.exercise_name }}</strong>
-                <ul>
-                    <li v-for="set in exercise.sets" :key="set.reps">
-                    Reps: {{ set.reps }} - Weight: {{ set.weight }} kg
-                    </li>
-                </ul>
-                </li>
-            </ul>
-        </div>
-        <button @click="listUpcomingEvents">event</button>
-        <pre id="content" style="white-space: pre-wrap;"></pre>
+
+        <button @click="listEvents">event</button>
     </div>
 </template>
 
@@ -54,6 +36,7 @@ export default {
     computed: {
         ...mapGetters({
             getSessions: 'session/getSessions',
+            getCalendarId: 'google/getCalendarId'
         }),
 
     },
@@ -74,40 +57,16 @@ export default {
             }));
             this.calendarOptions.events = events;
         },
-        async listUpcomingEvents() {
+        async listEvents() {
             let response = null
             try {
-                response = await gapi.client.calendar.calendarList.list()
+                response = await gapi.client.calendar.events.list({'calendarId': this.getCalendarId})
             } catch (err) {
                 document.getElementById('content').innerText = err.message;
                 return;
             }
 
             console.log(response)
-            const hasPlanExApp = response.result.items.some(item => item.summary === "PlanEx App");
-
-            if (hasPlanExApp) {
-                console.log("Ada yang memiliki summary 'PlanEx App'");
-            } else {
-                try {
-                    const buatCalendar = await gapi.client.calendar.calendars.insert({"summary": "PlanEx App"})
-                    console.log(buatCalendar)
-                } catch(err) {
-                    console.log(err)
-                }
-                console.log("Tidak ada yang memiliki summary 'PlanEx App'");
-
-            }
-            // const events = response.result.items;
-            // if (!events || events.length == 0) {
-            // document.getElementById('content').innerText = 'No events found.';
-            // return;
-            // }
-            // // Flatten to string to display
-            // const output = events.reduce(
-            //     (str, event) => `${str}${event.summary} (${event.start.dateTime || event.start.date})\n`,
-            //     'Events:\n');
-            // document.getElementById('content').innerText = output;
         }
     },
     created() {
