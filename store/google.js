@@ -13,8 +13,11 @@ export const mutations = {
 }
 
 export const actions = {
-    setCalendarId({commit}, id) {
-        commit('SET_CALENDAR_ID', id)
+    setCalendarId({commit, state}, id) {
+        if(!state.calendarId) {
+            commit('SET_CALENDAR_ID', id)
+            console.log('masuk commit', id)
+        }
     },
     setCalendarEvents({commit}, events) {
         commit('SET_CALENDAR_EVENTS', events)

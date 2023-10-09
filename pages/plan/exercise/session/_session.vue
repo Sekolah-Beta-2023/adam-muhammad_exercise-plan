@@ -1,10 +1,10 @@
 <template>
   <div class="session_container">
     <header class="session_header-container">
-        <div class="session_header-back-btn">&#10005;</div>
+        <div @click="cancelSession" class="session_header-back-btn">&#10005;</div>
         <h2 class="session_header-title">{{ stopwatchDisplay }}</h2>
     </header>
-    <form class="session_form-container" v-on:submit.prevent="save">
+    <form class="session_form-container">
       <div class="session_form-head">
         <p class="title">{{ this.$route.params.session }}</p>
         <div class="session-weight-location">
@@ -33,7 +33,7 @@
           <button class="session_add-btn" type="button" @click="tambahSet(exercise.name)" v-if="activeSessionIndex === i">add</button>          
         </div>
       </div>
-      <button class="session_save-btn">save session</button>
+      <nuxt-link class="session_save-btn" to="/plan"><a @click="save">save session</a></nuxt-link>
     </form>
   </div>
 </template>
@@ -101,6 +101,9 @@ export default {
     }
   },
   methods: {
+    cancelSession() {
+      this.$router.go(-2)
+    },
     sets(plan) {
       console.log(plan)
       plan.exercises.forEach(exercise => this.form.exercises.push({
@@ -187,8 +190,6 @@ export default {
       this.form.end.dateTime = new Date().toISOString();
       console.log(this.form);
       this.generateEvent()
-      // this.$router.go('/plan')
-      // this.$store.dispatch("session/saveSession", this.form);
     },
     startStopwatch() {
       this.stopwatch = setInterval(() => {

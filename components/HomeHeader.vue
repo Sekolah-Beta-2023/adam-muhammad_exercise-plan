@@ -1,12 +1,106 @@
 <template>
     <header class="home-header_container">
         <h2 class="home-header_title fs-600">PlanEx</h2>
-        <nuxt-link class="home-header_btn" to="/plan">Dashboard</nuxt-link>
+        <button v-if="!loggedIn" class="home-header_btn" id="authorize_button" @click="handleAuthClick">Authorize</button>
+    
+        <nuxt-link v-if="loggedIn" class="home-header_btn" to="/plan"><a @click="checkCalendar()">Dashboard</a></nuxt-link>
     </header>
 </template>
 
 <script>
 
+export default {
+    layout: "dashboard",
+    data() {
+        return {
+            tokenClient: null,
+            loggedIn: false,
+            gapiInited: false,
+            gisInited: false
+        }
+    },
+    async mounted() {
+        await this.loadGoogleApi();
+        await this.loadGoogleIdentityServices();
+    },
+    methods: {
+        async loadGoogleApi() {
+            gapi.load('client', this.initializeGapiClient);
+        },
+        async initializeGapiClient() {
+            await gapi.client.init({
+                apiKey: 'AIzaSyDbTy6_1Nsv9bYd2I27QstuSic90ao3YBg',
+                discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'],
+            });
+        },
+        async loadGoogleIdentityServices() {
+            this.tokenClient = google.accounts.oauth2.initTokenClient({
+                client_id: '568918727826-i2gta5g7lj5bmjs2n0ohe3jgia40ut75.apps.googleusercontent.com',
+                scope: 'https://www.googleapis.com/auth/calendar',
+                callback: '', // defined later
+            });
+        },
+        handleAuthClick() {
+            this.loggedIn = true
+            this.tokenClient.callback = async (resp) => {
+            if (resp.error !== undefined) {
+                throw resp;
+            }
+            };
+            this.gapiInited = true;
+            this.gisInited = true;
+
+            if (gapi.client.getToken() === null) {
+                this.tokenClient.requestAccessToken({ prompt: 'consent' });
+                console.log(gapi.client)
+            } else {
+                this.tokenClient.requestAccessToken({ prompt: '' });
+                console.log(gapi.client)
+            }
+        },
+
+        async checkCalendar() {
+            let response = null
+            try {
+                response = await gapi.client.calendar.calendarList.list()
+            } catch (err) {
+                console.log(err)
+                return;
+            }
+            console.log(response)
+            const hasPlanExApp = response.result.items.some(item => item.summary === "PlanEx App");
+
+            if (!hasPlanExApp) {
+                try {
+                    const buatCalendar = await gapi.client.calendar.calendars.insert({"summary": "PlanEx App"})
+                    console.log(buatCalendar.result.id)
+                    this.$store.dispatch('google/setCalendarId', buatCalendar.result.id)
+                    console.log(buatCalendar)
+                } catch(err) {
+                    console.log(err)
+                }
+                console.log("Tidak ada yang memiliki summary 'PlanEx App'");
+            } 
+            const items = response.result.items
+            for(let item of items) {
+                if(item.summary === "PlanEx App") {
+                    console.log(item.id)
+                    this.$store.dispatch('google/setCalendarId', item.id)
+                }
+            }    
+            console.log("Ada yang memiliki summary 'PlanEx App'");
+        },
+        handleSignoutClick() {
+            const token = gapi.client.getToken();
+            if (token !== null) {
+                google.accounts.oauth2.revoke(token.access_token);
+                gapi.client.setToken('');
+                this.gapiInited = false
+                this.gisInited = false
+            }
+        },
+    },
+};
 
 </script>
 
