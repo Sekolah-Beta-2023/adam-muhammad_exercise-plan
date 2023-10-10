@@ -1,5 +1,5 @@
 <template>
-    <div class="exercise-container">
+    <div class="session-container">
         <Header :title="this.$route.params.exercise" />
         <div class="plan-exercises-container">
             <ExerciseList :plan="plan" />
@@ -53,10 +53,24 @@ export default {
 
 /*  */
 
+.session_container {
+min-height: 100vh;
+display: flex;
+flex-direction: column;
+justify-content: flex-start;
+align-items: center;
+background-color: white;
+padding: 80px 0 150px 0;
+}
+
 .plan-exercises-container {
-    width: 90%;
-    height: fit-content;
-    border: 3px solid black;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: white;
+    padding: 80px 0 150px 0;
 }
 
 .delete-plan_btn {

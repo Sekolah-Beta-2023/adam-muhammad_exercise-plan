@@ -7,9 +7,9 @@
 
         <div class="calendar-events_container">
             <div class="calendar-events_events-container">
-                <div v-for="(event, i) of events" :key="i" class="calendar-events_event-container">
-                    <h1 @click="toggleDesc(i)">{{ event.title }}!!</h1>
-                    <p v-if="event.show">{{ event.extendedProps.sessionData }}</p>
+                <div v-for="(event, i) in events" :key="i" class="calendar-events_event-container">
+                    <h1 @click="toggleEvent(i)">{{ event.summary }}!!</h1>
+                    <p v-if="selectedEvent === i">{{ event.description }}</p>
                 </div>
             </div>
             <button @click="listEvents">event</button>
@@ -30,8 +30,8 @@ export default {
     // },
     data() {
         return {
-            events: [],
-            selectedSession: null,
+            eventsCalendar: [],
+            selectedEvent: null,
         }
     },
     computed: {
@@ -39,9 +39,19 @@ export default {
             getSessions: 'session/getSessions',
             getCalendarId: 'google/getCalendarId'
         }),
-
+        events() {
+            console.log(this.eventCalendar)
+            return this.eventsCalendar
+        }
     },
     methods: {
+        toggleEvent(index) {
+            if(this.selectedEvent === index) {
+                this.selectedEvent = null
+            } else {
+                this.selectedEvent = index
+            }
+        },
         // showSession(info) {
         //     // Ketika event di kalender diklik, tampilkan detail sesi
         //     this.selectedSession = info.event.extendedProps.sessionData;
@@ -68,19 +78,19 @@ export default {
                 return;
             }
 
-            const events = response.result.items.map((item) => ({
-                title: item.summary,
-                start: item.start.dateTime,
-                end: item.end.dateTime,
-                extendedProps: {
-                    sessionData: item.description
-                },
-                show: false
-            }))
-            this.events.push(events)
-            console.log(response)
-            console.log(events)
-            console.log('this events', this.events)
+            // const events = response.result.items.map((item) => ({
+            //     title: item.summary,
+            //     start: item.start.dateTime,
+            //     end: item.end.dateTime,
+            //     extendedProps: {
+            //         sessionData: item.description
+            //     },
+            //     show: false
+            // }))
+            this.eventsCalendar = response.result.items
+            // console.log(response)
+            // console.log(events)
+            // console.log('this events', this.events)
         }
     },
     async mounted() {
