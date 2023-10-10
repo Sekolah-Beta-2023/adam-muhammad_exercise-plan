@@ -43,9 +43,9 @@ export default {
         handleAuthClick() {
             this.loggedIn = true
             this.tokenClient.callback = async (resp) => {
-            if (resp.error !== undefined) {
-                throw resp;
-            }
+                if (resp.error !== undefined) {
+                    throw resp;
+                }
             };
             this.gapiInited = true;
             this.gisInited = true;

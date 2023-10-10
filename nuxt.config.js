@@ -20,7 +20,8 @@ export default {
     script: [
       // { src: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js', body: true }
       { src: "https://apis.google.com/js/api.js", defer: true, async: true, },
-      { src: "https://accounts.google.com/gsi/client", defer: true, async: true, }
+      { src: "https://accounts.google.com/gsi/client", defer: true, async: true, },
+      { src:"https://apis.google.com/js/platform.js?onload=init", defer: true, async: true }
     ]
   },
 

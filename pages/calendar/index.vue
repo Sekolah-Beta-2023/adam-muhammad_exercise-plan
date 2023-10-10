@@ -1,35 +1,36 @@
 <template>
     <div class="calendar_container">
-        <FullCalendar
+        <!-- <FullCalendar
             :options="calendarOptions"
             @eventClick="showSession"
-        />
+        /> -->
 
-        <button @click="listEvents">event</button>
+        <div class="calendar-events_container">
+            <div class="calendar-events_events-container">
+                <div v-for="(event, i) of events" :key="i" class="calendar-events_event-container">
+                    <h1 @click="toggleDesc(i)">{{ event.title }}!!</h1>
+                    <p v-if="event.show">{{ event.extendedProps.sessionData }}</p>
+                </div>
+            </div>
+            <button @click="listEvents">event</button>
+        </div>
     </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex"
-import FullCalendar from '@fullcalendar/vue'
+// import FullCalendar from '@fullcalendar/vue'
 import interactionPlugin from '@fullcalendar/interaction'
 import dayGridPlugin from '@fullcalendar/daygrid'
 
 export default {
     layout: 'dashboard',
-    components: {
-        FullCalendar
-    },
+    // components: {
+    //     FullCalendar
+    // },
     data() {
         return {
-            calendarOptions: {
-                plugins: [interactionPlugin, dayGridPlugin],
-                initialView: 'dayGridMonth',
-                nowIndicator: true,
-                editable: false,
-                weekends: true,
-                initialEvents: []
-            },
+            events: [],
             selectedSession: null,
         }
     },
@@ -41,43 +42,59 @@ export default {
 
     },
     methods: {
-        showSession(info) {
-            // Ketika event di kalender diklik, tampilkan detail sesi
-            this.selectedSession = info.event.extendedProps.sessionData;
-            console.log(this.selectedSession)
-        },
-        updateCalendarEvents() {
-            const events = this.getSessions.map((session) => ({
-                title: session.session_name,
-                start: new Date(session.start.dateTime),
-                end: new Date(session.end.dateTime),
-                extendedProps: {
-                    sessionData: session, // Menyimpan data sesi sebagai properti tambahan
-                },
-            }));
-            this.calendarOptions.events = events;
-        },
+        // showSession(info) {
+        //     // Ketika event di kalender diklik, tampilkan detail sesi
+        //     this.selectedSession = info.event.extendedProps.sessionData;
+        //     console.log(this.selectedSession)
+        // },
+        // updateCalendarEvents() {
+        //     const events = this.getSessions.map((session) => ({
+        //         title: session.session_name,
+        //         start: new Date(session.start.dateTime),
+        //         end: new Date(session.end.dateTime),
+        //         extendedProps: {
+        //             sessionData: session, 
+        //         },
+        //     }));
+        //     this.calendarOptions.events = events;
+        // },
         async listEvents() {
+            console.log(this.getCalendarId)
             let response = null
             try {
                 response = await gapi.client.calendar.events.list({'calendarId': this.getCalendarId})
             } catch (err) {
-                document.getElementById('content').innerText = err.message;
+                console.log(err)
                 return;
             }
 
+            const events = response.result.items.map((item) => ({
+                title: item.summary,
+                start: item.start.dateTime,
+                end: item.end.dateTime,
+                extendedProps: {
+                    sessionData: item.description
+                },
+                show: false
+            }))
+            this.events.push(events)
             console.log(response)
+            console.log(events)
+            console.log('this events', this.events)
         }
     },
-    created() {
-        // Panggil metode untuk menginisialisasi events di kalender
-        this.updateCalendarEvents();
-    },
+    async mounted() {
+        // this.listEvents
+    }
+    // created() {
+    //     // Panggil metode untuk menginisialisasi events di kalender
+    //     this.updateCalendarEvents();
+    // },
 }
 </script>
 <style>
 .calendar_container {
-    min-height: 100vh;
+    min-height: 100%;
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -106,6 +123,46 @@ export default {
 
 .fc-theme-standard .fc-scrollgrid {
     border: 1px solid black;
+}
+
+.calendar-events_container {
+    width: 90%;
+    padding: 10px;
+    border: 3px solid black;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+}
+
+.calendar-events_events-container {
+    border: 3px solid black;
+    align-self: stretch;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    overflow: auto;
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.calendar-events_events-container::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}
+
+.calendar-events_event-container {
+    border: 1px solid black;
+    padding: 10px 20px;
+}
+
+.calendar-events_event-container h1{
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.calendar-events_event-container p {
+    padding: 20px 0px;
 }
 
 </style>
