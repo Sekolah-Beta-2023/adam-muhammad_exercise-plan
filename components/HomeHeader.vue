@@ -3,7 +3,7 @@
         <h2 class="home-header_title fs-600">PlanEx</h2>
         <button v-if="!loggedIn" class="home-header_btn" id="authorize_button" @click="handleAuthClick">Authorize</button>
     
-        <nuxt-link v-if="loggedIn" class="home-header_btn" to="/plan"><a @click="checkCalendar()">Dashboard</a></nuxt-link>
+        <nuxt-link v-if="loggedIn" class="home-header_btn" to="/plan">Dashboard</nuxt-link>
     </header>
 </template>
 
@@ -39,12 +39,17 @@ export default {
                 scope: 'https://www.googleapis.com/auth/calendar',
                 callback: '', // defined later
             });
+            
         },
         handleAuthClick() {
-            this.loggedIn = true
             this.tokenClient.callback = async (resp) => {
+                console.log(resp)
                 if (resp.error !== undefined) {
                     throw resp;
+                } else {
+                    this.loggedIn = true
+                    this.checkCalendar()
+                    this.getData()
                 }
             };
             this.gapiInited = true;
@@ -52,10 +57,9 @@ export default {
 
             if (gapi.client.getToken() === null) {
                 this.tokenClient.requestAccessToken({ prompt: 'consent' });
-                console.log(gapi.client)
+                
             } else {
                 this.tokenClient.requestAccessToken({ prompt: '' });
-                console.log(gapi.client)
             }
         },
 
@@ -89,6 +93,15 @@ export default {
                 }
             }    
             console.log("Ada yang memiliki summary 'PlanEx App'");
+        },
+        async getData() {
+            try {
+                await this.$store.dispatch('exercises/fetchExercises')
+                await this.$store.dispatch('session/loadSessionFromLocalStorage')
+                await this.$store.dispatch('plans/loadPlansFromLocalStorage')
+            } catch (error) {
+                console.error('Terjadi kesalahan:', error);
+            }
         },
         handleSignoutClick() {
             const token = gapi.client.getToken();

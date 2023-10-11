@@ -34,6 +34,9 @@ export default {
             selectedEvent: null,
         }
     },
+    async mounted() {
+        await this.listEvents()
+    },
     computed: {
         ...mapGetters({
             getSessions: 'session/getSessions',
@@ -52,22 +55,6 @@ export default {
                 this.selectedEvent = index
             }
         },
-        // showSession(info) {
-        //     // Ketika event di kalender diklik, tampilkan detail sesi
-        //     this.selectedSession = info.event.extendedProps.sessionData;
-        //     console.log(this.selectedSession)
-        // },
-        // updateCalendarEvents() {
-        //     const events = this.getSessions.map((session) => ({
-        //         title: session.session_name,
-        //         start: new Date(session.start.dateTime),
-        //         end: new Date(session.end.dateTime),
-        //         extendedProps: {
-        //             sessionData: session, 
-        //         },
-        //     }));
-        //     this.calendarOptions.events = events;
-        // },
         async listEvents() {
             console.log(this.getCalendarId)
             let response = null
@@ -78,24 +65,9 @@ export default {
                 return;
             }
 
-            // const events = response.result.items.map((item) => ({
-            //     title: item.summary,
-            //     start: item.start.dateTime,
-            //     end: item.end.dateTime,
-            //     extendedProps: {
-            //         sessionData: item.description
-            //     },
-            //     show: false
-            // }))
             this.eventsCalendar = response.result.items
-            // console.log(response)
-            // console.log(events)
-            // console.log('this events', this.events)
         }
     },
-    async mounted() {
-        // this.listEvents
-    }
     // created() {
     //     // Panggil metode untuk menginisialisasi events di kalender
     //     this.updateCalendarEvents();
