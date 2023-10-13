@@ -18,6 +18,3 @@ $ npm run start
 $ npm run generate
 ```
 
-sb-aabcdkxxkotuahyxoehv-auth-token
-
-sb-aabcdkxxkotuahyxoehv-auth-token
