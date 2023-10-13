@@ -1,6 +1,7 @@
-# nuxt-app
+# PlanEx [https://daily-exercise-plan.netlify.app/](https://daily-exercise-plan.netlify.app/)
+merupakan web app yang dirancang dengan nuxt js untuk mencatat progress exercise dan mengsinkronkan ke google calendar api. Karena api google yang digunakan masih tahap deveopment, untuk dapat login mencoba web app ini anda dapat menghubungi owner untuk didaftarkan emailnya
 
-## Build Setup [https://daily-exercise-plan.netlify.app/](https://daily-exercise-plan.netlify.app/)
+## Build Setup 
 
 ```bash
 # install dependencies
